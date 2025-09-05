@@ -1,0 +1,221 @@
+[
+     
+  {
+        "name": "ARTEMIS PAPIER",
+        "actions": [
+            "Open 'https://www.uca.fr/en'",
+            "Click on 'Accept all'",
+            "Click on 'European University'",
+            "Assert that the page has links",
+            "Assert that 'Roadmap' is present in the page"
+            ],
+        "expected": [1, 1]
+    },
+     
+    {
+        "name": "Sign Up to Google Gruyere",
+        "actions": [
+            "Go to the website 'https://google-gruyere.appspot.com/start'",
+            "Click on 'Agree & Start'",
+            "Click on 'Sign up'",
+            "Type in 'toto' in the field 'User name'",
+            "Type in 'toto' in the field 'Password'",
+            "Click on 'Create account'",
+            "Assert that the 'Account created' is displayed on this page"
+        ],
+        "expected": [1]
+    },
+    {
+        "name": "All Snippets Displayed",
+        "actions": [
+            "Open the website 'https://google-gruyere.appspot.com/start'",
+            "Click on 'Agree & Start'",
+            "Click on 'All snippets'",
+            "Assert that 'Gruyere' OR 'Cheddar' is displayed on this page.",
+            "Assert that 'Bleu d'Auvergne' is displayed on this page."
+        ],
+        "expected": [1, 0]
+    },
+    {
+        "name": "Add a New Personal Snippet",
+        "actions": [
+            "Open the website 'https://google-gruyere.appspot.com/start'",
+            "Click on 'Agree & Start'",
+            "Click on 'Sign up'",
+            "Type in 'toto' in the field 'User name'",
+            "Type in 'toto' in the field 'Password'",
+            "Click on 'Create account'",
+            "Click on 'Home'",
+            "Click on 'New Snippet'",
+            "Type in 'TRUC' in the input 'snippet'",
+            "Click on 'Submit'",
+            "Assert that 'TRUC' is present in the content of the page"
+        ],
+        "expected": [ 1]
+    },
+  
+    {
+        "name": "Sign Up and Sign Out from Google Gruyere",
+        "actions": [
+            "Open the website 'https://google-gruyere.appspot.com/start'",
+            "Click on 'Agree & Start'",
+            "Click on 'Sign up'",
+            "Type in 'toto' in the field 'User name'",
+            "Type in 'toto' in the field 'Password'",
+            "Click on 'Create account'",
+            "Click on 'Home'",
+            "Click on 'Sign out'",
+            "Assert that 'toto' is not displayed on this page"
+        ],
+        "expected": [1]
+    },
+     {
+        "name": "Add and Delete Personal Snippet",
+        "actions": [
+            "Open the website 'https://google-gruyere.appspot.com/start'",
+            "Click on 'Agree & Start'",
+            "Click on 'Sign up'",
+            "Type in 'toto' in the field 'User name'",
+            "Type in 'toto' in the field 'Password'",
+            "Click on 'Create account'",
+            "Click on 'Home'",
+            "Click on 'New Snippet'",
+            "Type in 'tutu' in the textarea 'snippet'",
+            "Click on 'Submit'",
+            "Click on 'My Snippets'",
+            "Click on 'X'",
+            "Assert that 'tutu' is not present in the content of the page"
+        ],
+        "expected": [1] 
+    },
+    {
+        "name": "No Snippet After Sign Up",
+        "actions": [
+            "Open the website 'https://google-gruyere.appspot.com/start'",
+            "Click on 'Agree & Start'",
+            "Click on 'Sign up'",
+            "Type in 'toto' in the field 'User name'",
+            "Type in 'toto' in the field 'Password'",
+            "Click on 'Create account'",
+            "Click on 'Home'",
+            "Click on 'My Snippets'",
+            "Assert that 'No snippets' is displayed on the page"
+        ],
+        "expected": [1]
+    } ,
+    {
+        "name": "Change Password after Sign Up",
+        "actions": ["Open the website 'https://google-gruyere.appspot.com/start'",
+            "Click on 'Agree & Start'",
+            "Click on 'Sign up'",
+            "Type in 'toto' in the field 'User name'",
+            "Type in 'toto' in the field 'Password'",
+            "Click on 'Create account'",
+            "Click on 'Home'",
+            "Click on 'Profile'",
+            "Type in 'toto' in the field 'OLD Password:'",
+            "Type in 'titi' in the field 'NEW Password:'",
+            "Click on 'Update'",
+            "Click on 'Sign out'",
+            "Click on 'Sign in'",
+            "Type in 'toto' in the field 'User name'",
+            "Type in 'titi' in the field 'Password'",
+            "Click on 'Login'",
+            "Assert that 'toto' is displayed on this page"
+        ],
+        "expected": [ 1]
+    },
+    {
+  "name": "Wrong Keyword in Snippets",
+  "actions": [
+    "Open the website 'https://google-gruyere.appspot.com/start'",
+    "Click on 'Agree & Start'",
+    "Click on 'All snippets'",
+    "Assert that 'Mozzarella' is displayed on this page."
+  ],
+  "expected": [ 0]
+},
+{
+  "name": "Create Account Missing Password",
+  "actions": [
+    "Open the website 'https://google-gruyere.appspot.com/start'",
+    "Click on 'Agree & Start'",
+    "Click on 'Sign up'",
+    "Type in 'toto' in the field 'User name'",
+    "Click on 'Create account'",
+    "Assert that 'Account created' is displayed on this page",
+    "Assert that 'Missing Password' is displayed on this page"
+
+  ],
+  "expected": [ 1, 0]
+},
+{
+  "name": "Access Snippets Without Login",
+  "actions": [
+    "Open the website 'https://google-gruyere.appspot.com/start'",
+    "Click on 'Agree & Start'",
+    "Assert that 'toto' is not present on this page",
+    "Assert that 'My Snippets' is present on this page"    
+    ],
+  "expected": [ 1, 0]
+},
+ 
+    {
+        "name": "Display Security Projects",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/'",
+            "Click on 'Projects'",
+            "Click on 'Security'",
+            "Assert that the page has a link 'ANR Severitas 21-25'"
+            
+        ],
+        "expected": [ 1]
+    },   
+{
+  "name": "Nonexistent Course",
+  "actions": [
+    "Open the website 'https://perso.limos.fr/~sesalva/'",
+    "Click on 'Teaching'",
+    "Assert that 'Javascript' is displayed in the page"
+  ],
+  "expected": [ 0]
+},
+{
+        "name": "Display PHP Courses",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/'",
+            "Click on 'Teaching'",
+            "Click on the link 'Cours PHP'",
+            "Assert that the page has sentences containing the term 'Cours'",
+            "Assert that there is at least one 'Cours' on this page"
+        ],
+        "expected": [ 1, 1]
+    },
+    {
+        "name": "ARTEMIS PAPIER False",
+        "actions": [
+            "Open the website 'https://www.uca.fr/en'",
+            "Assert that the page has links",
+            "Assert that the page has links with the term 'ARTEMIS'"
+
+        ],
+        "expected": [ 1, 0]
+    },
+    {
+        "name": "Change User Name in Profile",
+        "actions": [
+            "Open the website 'https://google-gruyere.appspot.com/start'",
+            "Click on 'Agree & Start'",
+            "Click on 'Sign up'",
+            "Type in 'toto' in the field 'User name'",
+            "Type in 'toto' in the field 'Password'",
+            "Click on 'Create account'",
+            "Click on 'Home'",
+            "Click on 'Profile'",
+            "Type in 'sasa' in the field 'User name'",
+            "Click on 'Update'",
+            "Assert that 'sasa' is present in the content of the page"
+        ],
+        "expected": [ 1]
+    }
+]

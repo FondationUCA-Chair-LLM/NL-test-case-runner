@@ -1,0 +1,108 @@
+[
+     {
+    "name": "1Search with Existing Product",
+    "actions": [
+      "Open the website 'http://localhost/opencart'",
+      "Click on 'MacBook' ",
+      "Click on 'Add to Cart'",
+      "Assert that '1 item(s)' is displayed in the page"
+    ]
+  },
+    {
+    "name": "2Login with valid data",
+    "actions": [
+      "Open the website 'http://localhost/opencart'",
+      "Click on 'My Account'",
+      "Click on 'Login'",
+      "Fill the field 'email' with 'sasa@sasa.com'",
+      "Fill the field 'password' with 'sasasa",
+      "Click on 'Login'",
+      "Assert that 'My Account' is displayed on the page"
+    ]
+  },
+ {
+    "name": "3User Registration with existing email",
+    "actions": [
+      "Open the website 'http://localhost/opencart'",
+      "Click on 'My Account'",
+      "Click on 'Register'",
+      "Fill the field 'firstname' with 'toto'",
+      "Fill the field 'lastname' with 'Tata'",
+      "Fill the field 'email' with 'toto@example.com'",
+      "Fill the field 'password' with 'new_password'",
+      "Click on 'agree'",
+      "Click on 'Continue'",
+      "Assert that 'Continue' is displayed on the page"
+    ],
+      "expected": [1]
+  },
+{
+    "name": "4Search Product Page",
+    "actions": [
+      "Open the website 'http://localhost/opencart'",
+      "Fill the field 'search' with 'iMac'",
+      "Press 'enter'",
+      "Assert that 'iMac' OR 'error is displayed on the page"
+    ]
+  },
+  {
+    "name": "5Login with incorrect email",
+    "actions": [
+      "Open the website 'http://localhost/opencart'",
+      "Click on 'My Account'",
+      "Click on 'Login'",
+      "Fill the field 'email' with 'user@gmail.com'",
+      "Click on 'Login'",
+      "Assert that 'warning' is displayed on the page"
+    ]
+  },
+  
+   {
+    "name": "6Checkprice",
+    "actions": [
+      "Open the website 'http://localhost/opencart'",
+      "Click on 'Tablets'",
+      "Click on 'Samsung Galaxy Tab 10.1'",
+      "Assert that '241.99' and 'Ex Tax: 199.99' are displayed in the page"
+    ]
+  },
+   {
+    "name": "7CheckCart",
+    "actions": [
+      "Open the website 'http://localhost/opencart'",
+      "Click on 'Tablets'",
+      "Click on 'Samsung Galaxy Tab 10.1'",
+      "Click on 'Add to Cart'",
+      "Click on 'Shopping Cart'",
+      "Assert that 'Samsung Galaxy Tab 10.1' is displayed in the page"
+    ]
+  },
+  {
+    "name": "8View product details",
+    "actions": [
+      "Open the website 'http://localhost/opencart'",
+      "Click on 'MacBook'",
+      "Assert that the link 'Description' is displayed on the page",
+      "Assert that the link 'Reviews' is displayed on the page",
+      "Assert that the link 'Specification' is displayed on the page"
+    ]
+  },
+  {
+    "name": "9Check Shopping cart",
+    "actions": [
+      "Open the website 'http://localhost/opencart'",
+      "Click on 'Shopping Cart'",
+      "Assert that 'Your shopping cart is empty!' is displayed on the page"
+    ]
+  },
+
+  {
+    "name": "10sitemap",
+    "actions": [
+      "Open the website 'http://localhost/opencart'",
+      "Click on 'Site Map' ",
+      "Assert that 'Site Map' is displayed on the page",
+      "Assert that 'Information' is displayed on the page"
+    ]
+  }
+]

@@ -1,0 +1,149 @@
+[
+{
+  "name": "1WaterMan Register",
+  "actions": [
+    "Open the website 'http://localhost/watermanagement/'",
+    "Click on 'Register'",
+    "Type in 'tutu' in the field 'Username'",
+    "Type in 'tutu@tutu.com' in the field 'Email'",
+    "Type in 'admin' in the field 'Password'",
+    "Click on 'Login'",
+    "Assert that 'Success' is displayed on this page"
+
+  ],
+  "expected": [1]
+},
+
+ {
+  "name": "2WaterMan Register&login",
+  "actions": [
+    "Open the website 'http://localhost/watermanagement/'",
+    "Click on 'Register'",
+    "Type in 'tutu' in the field 'Username'",
+    "Type in 'tutu@tutu.com' in the field 'Email'",
+    "Type in 'admin' in the field 'Password'",
+    "Click on 'Login'",
+    "Type in 'admin' in the field 'username'",
+    "Type in 'admin' in the field 'Password'",
+    "Click on 'Login'",
+    "Assert that 'Dashboard' is displayed on this page",
+    "Assert that the link 'Orders' is displayed on this page"
+    ],
+  "expected": [1,1]
+},
+{
+  "name": "3WaterMan login",
+  "actions": [
+    "Open the website 'http://localhost/watermanagement/'",
+    "Type in 'admin' in the field 'username'",
+    "Type in 'admin' in the field 'Password'",
+    "Click on 'Login'",
+    "Assert that 'Dashboard' is displayed on this page"
+
+  ],
+  "expected": [1]
+},
+{
+  "name": "4WaterMan Add vendors",
+  "actions": [
+    "Open the website 'http://localhost/watermanagement/'",
+    "Type in 'admin' in the field 'username'",
+    "Type in 'admin' in the field 'Password'",
+    "Click on 'Login'",
+    "Click on Vendors",
+    "Click on '+ Add Vendors'",
+    "Type in 'toto' in the field 'Vendor Name'",
+    "Type in '0658626906' in the field 'vendor_phone'",
+    "Type in '1' in the field 'Quantity'",
+    "Type in '1' in the field 'Price'",
+    "Click on 'Submit'",
+    "Assert that 'Vendors' is displayed on this page"
+  ],
+  "expected": [1]
+},
+{
+  "name": "5WaterMan Delete Customers",
+  "actions": [
+    "Open the website 'http://localhost/watermanagement/'",
+    "Type in 'admin' in the field 'username'",
+    "Type in 'admin' in the field 'Password'",
+    "Click on 'Login'",
+    "Click on 'Customer'",
+    "Assert that 'HEllo' is displayed on this page"
+  ],
+  "expected": [1]
+},
+{
+  "name": "6WaterMan Add Customers",
+  "actions": [
+    "Open the website 'http://localhost/watermanagement/'",
+    "Type in 'admin' in the field 'username'",
+    "Type in 'admin' in the field 'Password'",
+    "Click on 'Login'",
+    "Click on 'Customer'",
+    "Click on '+ Add Customer'",
+    "Type in 'tutu' in the field 'customer_name'",
+    "Type in '0658626906' in the field 'customer_phone'",
+    "Click on 'Submit'",
+    "Assert that 'tutu' is displayed on this page"
+  ],
+  "expected": [1]
+},
+{
+  "name": "7WaterMan Add/Delete Customers",
+  "actions": [
+    "Open the website 'http://localhost/watermanagement/'",
+    "Type in 'admin' in the field 'username'",
+    "Type in 'admin' in the field 'Password'",
+    "Click on 'Login'",
+    "Click on 'Customer'",
+    "Click on '+ Add Customer'",
+    "Type in 'tutu' in the field 'customer_name'",
+    "Type in '0658626906' in the field 'customer_phone'",
+    "Click on 'Submit'",
+    "Click on the 'Delete' button for Customer 'tutu'",
+    "Assert that 'tutu' is not displayed on this page"
+  ],
+  "expected": [1]
+},
+{
+  "name": "8WaterMan bill",
+  "actions": [
+    "Open the website 'http://localhost/watermanagement/'",
+    "Type in 'admin' in the field 'username'",
+    "Type in 'admin' in the field 'Password'",
+    "Click on 'Login'",
+    "Click on 'Orders'",
+    "Click on the 'BILL' button for order id '1045'",
+    "Assert that 'Order No :1045' is displayed on this page",
+    "Assert that 'pending' is displayed on this page"
+  ],
+  "expected": [1, 1]
+},
+{
+  "name": "9WaterMan Product",
+  "actions": [
+    "Open the website 'http://localhost/watermanagement/'",
+    "Type in 'admin' in the field 'username'",
+    "Type in 'admin' in the field 'Password'",
+    "Click on 'Login'",
+    "Click on 'Product'",
+    "Assert that 'Water Jar' is displayed on this page"
+  ],
+  "expected": [1]
+},
+{
+  "name": "10WaterMan search Customers",
+  "actions": [
+    "Open the website 'http://localhost/watermanagement/'",
+    "Type in 'admin' in the field 'username'",
+    "Type in 'admin' in the field 'Password'",
+    "Click on 'Login'",
+    "Click on 'Customer'",
+    "Type in 'titi' in the field 'search'",
+    "Click on 'Go'",
+    "Assert that 'titi' is not displayed on this page"
+  ],
+  "expected": [1]
+}
+]
