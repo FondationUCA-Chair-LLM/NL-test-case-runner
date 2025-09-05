@@ -60,5 +60,3 @@ Launch with npm start
 
 ## Acknoledgement
 Research supported by the industrial chair on Reliable and Confident Use of LLMs (https://uca-fondation.fr/les-chaires/***) and MIAI Cluster, France 2030  (ANR-23-IACL-0006)
-<img width="2183" height="60" alt="image" src="https://github.com/user-attachments/assets/c8f14976-5571-4ab1-8947-714d5e293fd4" />
-
