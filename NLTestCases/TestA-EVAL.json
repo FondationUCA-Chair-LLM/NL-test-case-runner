@@ -1,0 +1,247 @@
+[
+     
+  {
+        "name": "ARTEMIS PAPIER A0",
+        "actions": [
+            "Open 'http://localhost:8000/artemis/eu-artemis.eu/news.html'",
+            "Assert that the page has links"
+            ],
+        "expected": [1, 1]
+    },
+ {
+        "name": "ARTEMIS PAPIER A1",
+        "actions": [
+            "Open 'http://localhost:8000/artemis/eu-artemis.eu/news.html'",
+            "Assert that the page has a link with the word 'ARTEMIS' in its description"
+            
+            ],
+        "expected": [1, 1]
+    },
+    {
+        "name": "ARTEMIS PAPIER A",
+        "actions": [
+            "Open 'http://localhost:8000/artemis/eu-artemis.eu/news.html'",
+            "Assert that the page has a button 'ARTEMIS'"
+            ],
+        "expected": [1, 0]
+    },
+     {
+        "name": "ARTEMIS PAPIER A2",
+        "actions": [
+            "Open 'http://localhost:8000/artemis/eu-artemis.eu/index.html'",
+            "Assert that 'ALL NEWS' is present"
+            ],
+        "expected": [1, 1]
+    },
+    {
+        "name": "ARTEMIS PAPIER A21",
+        "actions": [
+            "Open 'http://localhost:8000/artemis/eu-artemis.eu/index.html'",
+            "Assert that 'Kick-off' is displayed in the page"
+            
+            ],
+        "expected": [1, 1]
+    },
+    {
+        "name": "ARTEMIS PAPIER A22",
+        "actions": [
+            "Open 'http://localhost:8000/artemis/eu-artemis.eu/index.html'",
+            "Assert that 'tutu' is displayed in the page"
+            ],
+        "expected": [1, 0]
+    },
+    {
+        "name": "UCA",
+        "actions": [
+            "Open 'https://www.uca.fr/en'",
+            "Assert that the page has links"
+            ],
+        "expected": [1, 1]
+    },
+    {
+        "name": "UCA11",
+        "actions": [
+            "Open 'https://www.uca.fr/en'",
+            "Assert that 'Welcome' is displayed in the page"
+            
+            ],
+        "expected": [1, 1]
+    },
+    {
+        "name": "UCA12",
+        "actions": [
+            "Open 'https://www.uca.fr/en'",
+            "Assert that 'tutu' is displayed in the page"
+            ],
+        "expected": [1, 0]
+    },
+    {
+        "name": "UCA2",
+        "actions": [
+            "Open 'https://www.uca.fr/en/relations-office'",
+            "Assert that the page has links"
+            ],
+        "expected": [1, 1]
+    },
+    {
+        "name": "UCA21",
+        "actions": [
+            "Open 'https://www.uca.fr/en/relations-office'",
+            "Assert that the page has a link 'Strategy'"
+            
+            ],
+        "expected": [1, 1]
+    },
+    {
+        "name": "UCA22",
+        "actions": [
+            "Open 'https://www.uca.fr/en/relations-office'",
+            "Assert that the page has a link 'Mobilities'"
+            ],
+        "expected": [1, 1]
+    },
+    {
+        "name": "UCA3",
+        "actions": [
+            "Open 'https://www.uca.fr/en/strategy/hosting-delegations'",
+            "Assert that the page has links"
+            ],
+        "expected": [1, 1]
+    },
+{
+        "name": "UCA32",
+        "actions": [
+            "Open 'https://www.uca.fr/en/strategy/hosting-delegations'",
+            "Assert that 'Visiting' is present in the page"
+            ],
+        "expected": [1, 1]
+    },
+    {
+        "name": "UCA33",
+        "actions": [
+            "Open 'https://www.uca.fr/en/strategy/hosting-delegations'",
+            "Assert that the page has a link 'HRS4R'"
+            ],
+        "expected": [1, 1]
+    },
+    {
+        "name": "UCA34",
+        "actions": [
+            "Open 'https://www.uca.fr/en/strategy/hosting-delegations'",
+            "Assert that the page has a link 'tutu'"
+            ],
+        "expected": [1,0]
+    },
+    {
+        "name": "Display PHP Courses",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/teaching/php/'",
+            "Assert that the page has more than 3 sentences containing the term 'Cours'"
+        ],
+        "expected": [1, 1]
+    },
+     {
+        "name": "Display PHP Courses2",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/teaching/php/'",
+            "Assert that the page has a link with the word 'MVC' in its description"
+        ],
+        "expected": [1, 1]
+    },
+     {
+        "name": "Display PHP Courses3",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/teaching/php/'",
+            "Assert that the page has a link with the word 'ARTEMIS' in its description"
+        ],
+        "expected": [1,0]
+    },
+    {
+        "name": "Display PHP Courses4",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/teaching/php/'",
+            "Assert that the page has at least one sentence containing the term 'Cours'"
+            
+        ],
+        "expected": [1, 1]
+    },
+    {
+        "name": "Display PHP Courses5",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/teaching/php/'",
+            "Assert that the page has a form"
+        ],
+        "expected": [1, 0]
+    },
+    {
+        "name": "Display Security Projects",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/'",
+            "Assert that the page has a link 'ANR Severitas 21-25'"
+            
+        ],
+        "expected": [1, 1]
+    },
+    {
+        "name": "Display Security Projects2",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/'",
+            "Assert that 'Deputy Director IUT CA' is displayed in the page"
+            
+        ],
+        "expected": [1, 1]
+    },
+    {
+        "name": "Display Security Projects3",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/'",
+            
+            "Assert that 'Security' is displayed in the page"
+            
+        ],
+        "expected": [1, 1]
+    },
+    {
+        "name": "Display Security Projects",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/'",
+            "Assert that 'tutu' is displayed in the page"
+        ],
+        "expected": [1, 0]
+    },
+    {
+        "name": "Publications",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/publication/'",
+            "Assert that there is a publication with the author 'Jouseau'"
+            
+        ],
+        "expected": [1, 1]
+    },
+    {
+        "name": "Publications11",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/publication/'",
+            "Assert that 'Javascript' is displayed in the page"
+        ],
+        "expected": [1, 0]
+    },
+    {
+        "name": "Publications2",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/publication/'",
+            "Assert that 'ICSOFT' is displayed in the page"
+        ],
+        "expected": [1, 1]
+    },
+    {
+        "name": "Publications22",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/publication/'",
+            "Assert that 'ICSOFT' is displayed at least 3 times in the page"
+        ],
+        "expected": [ 1, 1]
+    }
+    
+    
+]
