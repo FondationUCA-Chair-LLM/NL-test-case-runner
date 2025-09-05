@@ -1,0 +1,47 @@
+[
+     
+  {
+        "name": "ARTEMIS PAPIER",
+        "actions": [
+            "Open 'https://www.uca.fr/en'",
+            "Click on 'Accept all'",
+            "Click on 'European University'",
+            "Click on 'ALL NEWS'",
+            "Assert that the page has links",
+            "Assert that the page has a link with the word 'ARTEMIS' in its description"
+            ],
+        "expected": [1, 1, 1, 1, 1, 1]
+    },
+    {
+        "name": "Display Security Projects",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/'",
+            "Click on 'Projects'",
+            "Click on 'Security'",
+            "Assert that the page has a link 'ANR Severitas 21-25'"
+            
+        ],
+        "expected": [1, 1, 1, 1]
+    },
+    {
+        "name": "Display PHP Courses",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/'",
+            "Click on 'Teaching'",
+            "Click on 'Cours PHP'",
+            "Assert that the page has sentences containing the term 'Cours'",
+            "Assert that there is at least one 'Cours' on this page"
+        ],
+        "expected": [1, 1, 1, 1, 1]
+    },
+    
+{
+  "name": "Nonexistent Teaching Page",
+  "actions": [
+    "Open the website 'https://perso.limos.fr/~sesalva/'",
+    "Click on 'Teaching'",
+    "Assert that 'Javascript' is displayed in the page"
+  ],
+  "expected": [1, 1, 0]
+}
+]
