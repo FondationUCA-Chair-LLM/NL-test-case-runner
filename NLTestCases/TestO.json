@@ -1,5 +1,5 @@
 [
-     {
+  {
     "name": "1Search with Existing Product",
     "actions": [
       "Open the website 'http://localhost/opencart'",
@@ -83,7 +83,7 @@
       "Open the website 'http://localhost/opencart'",
       "Click on 'MacBook'",
       "Assert that the link 'Description' is displayed on the page",
-      "Assert that the link 'Reviews' is displayed on the page",
+      "Assert that the link 'Reviews (0)' is displayed on the page",
       "Assert that the link 'Specification' is displayed on the page"
     ]
   },
