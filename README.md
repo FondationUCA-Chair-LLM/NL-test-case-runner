@@ -2,7 +2,7 @@
 Test runners for executing NL test cases written in natural language with LLM agents
 
 3 prototype tools composed of three LLM agents for executing NL test cases. These tools explore the execution of functional test cases written in natural language (NL) using LLM-based agents with guardrails to preserve soundness as far as possible.  
-See paper available here : ****
+See paper available here : [https://arxiv.org/abs/2509.19136v1](https://arxiv.org/abs/2509.19136v1)
 - Two agents focus on evaluating readiness actions (checks that the GUI is ready for the next test step) and assertions.  
 - The third agent is built on top of the [Stagehand](https://www.stagehand.dev/) framework, which automates browser interactions in natural language and code using LLMs. Stagehand is used here to perform navigation actions and partial data extraction from Web pages.  
 
