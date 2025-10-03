@@ -59,4 +59,4 @@ Change the configurations in Stagehand.config.ts
 Launch with npm start
 
 ## Acknoledgement
-Research supported by the industrial chair on Reliable and Confident Use of LLMs (https://uca-fondation.fr/les-chaires/***) and MIAI Cluster, France 2030  (ANR-23-IACL-0006)
+Research supported by the industrial chair on Reliable and Confident Use of LLMs ([https://uca-fondation.fr/chaires/chaire-sur-lutilisation-fiable-et-de-confiance-des-grands-modeles-de-langage-llms/](https://uca-fondation.fr/chaires/chaire-sur-lutilisation-fiable-et-de-confiance-des-grands-modeles-de-langage-llms/) and MIAI Cluster, France 2030  (ANR-23-IACL-0006)
