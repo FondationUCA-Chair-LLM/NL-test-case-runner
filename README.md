@@ -55,6 +55,8 @@ The same as previously but without guardrails. Soundness is not taken into consi
 
 ## Installation
 Clone the repository and install dependencies: npm install @browserbasehq/stagehand playwright zod
+Install dependencies: npm install @browserbasehq/stagehand@xxx (ex: 2.3.0) playwright zod
+Install browsers once: npx playwright install (see [https://docs.stagehand.dev/](https://docs.stagehand.dev/) )
 Change the configurations in Stagehand.config.ts
 Launch with npm start
 
