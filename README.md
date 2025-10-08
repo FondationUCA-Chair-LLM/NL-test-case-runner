@@ -54,11 +54,11 @@ The same as previously but without guardrails. Soundness is not taken into consi
 ---
 
 ## Installation
-Clone the repository and install dependencies: npm install @browserbasehq/stagehand playwright zod
-Install dependencies: npm install @browserbasehq/stagehand@xxx (ex: 2.3.0) playwright zod
-Install browsers once: npx playwright install (see [https://docs.stagehand.dev/](https://docs.stagehand.dev/) )
-Change the configurations in Stagehand.config.ts
-Launch with npm start
+- Clone the repository and install dependencies: npm install @browserbasehq/stagehand playwright zod
+- Install dependencies: npm install @browserbasehq/stagehand@xxx (ex: 2.3.0) playwright zod
+- Install browsers once: npx playwright install (see [https://docs.stagehand.dev/](https://docs.stagehand.dev/) )
+- Change the configurations in Stagehand.config.ts
+- Launch with npm start
 
 ## Acknoledgement
 Research supported by the industrial chair on Reliable and Confident Use of LLMs ([https://uca-fondation.fr/chaires/chaire-sur-lutilisation-fiable-et-de-confiance-des-grands-modeles-de-langage-llms/](https://uca-fondation.fr/chaires/chaire-sur-lutilisation-fiable-et-de-confiance-des-grands-modeles-de-langage-llms/) and MIAI Cluster, France 2030  (ANR-23-IACL-0006)
