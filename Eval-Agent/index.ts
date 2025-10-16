@@ -330,31 +330,36 @@ for (const chunk of chunks) {
 
 // Appelle deux agents pour évaluer si l'action suivante peut être effectuée
 async function evaluateWithLLM(page: Page, term: string, data: Obs): Promise<boolean> {
-        console.debug("Evaluate with LLM", term, "\n");
-        let content = await extract(data, page);
-        
-   const prompt = PromptTemplate.fromTemplate(prompt_eval);      
-  const llm = new Ollama({model: model_eval,
-  temperature: 0,
-  maxRetries: 5,
-  baseUrl: server, // Base URL for the Ollama API PB ICI 404 ?
-  // other params...
+  console.debug("Evaluate with LLM", term, "\n");
+  let content = await extract(data, page);
+
+  const prompt = PromptTemplate.fromTemplate(prompt_eval);
+  const llm = new Ollama({
+    model: model_eval,
+    temperature: 0,
+    maxRetries: 5,
+    baseUrl: server, // Base URL for the Ollama API PB ICI 404 ?
+    // other params...
   });
-  const chain = prompt.pipe(llm);
-  var response = await chain.invoke({
-  page: content,
-  input: term,
-  });
+
+const chunks = splitWithOverlap(content, 4000, 50);
+const result: any[] = [];
+const chain = prompt.pipe(llm);
+for (const chunk of chunks) {
+    var response = await chain.invoke({
+      page: chunk,
+      input: term,
+    });
   console.debug("\n", "Evaluate with LLM response", response);
   response = response.toLowerCase();
   var match = response.match(/<\/think>\s*(.*)/s);
   var response = match ? match[1] : response;
   match = response.match(/verdict:(.*)/);
   response = match ? match[1] : response;
-
-  return response === "true" || (typeof response === "string" && (response.includes("true")||response.includes("yes")));
-    }
-
+  result.push(response === "true" || (typeof response === "string" && (response.includes("true") || response.includes("yes"))));
+}
+  return result.reduce((acc, val) => acc || val, false);
+}
 
 function normalized_std(binary_results: number[]): number {
     if (binary_results.length === 0) {

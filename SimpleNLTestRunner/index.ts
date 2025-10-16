@@ -1,4 +1,4 @@
-import { Stagehand, Page, BrowserContext } from "@browserbasehq/stagehand";
+import { Stagehand, Page, BrowserContext, ObserveResult } from "@browserbasehq/stagehand";
 import { model_assert, server, StagehandConfig, NUM_RUNS, test_suite } from "./stagehand.config.js";
 import chalk from "chalk";
 import boxen from "boxen";
@@ -15,10 +15,10 @@ import * as path from "path";
 import { exit } from "process";
 
 import { prompt_assert, prompt_extract, prompt_extract2 } from "./prompts.js";
-import { extract, splitWithOverlap,  } from "./Extractor.js";
+import { extract, splitWithOverlap } from "./Extractor.js";
 
 var NUM_RUNS_TEMP = NUM_RUNS; 
-
+var UIactions: ObserveResult[][] = [];
 /* function evaluation */
 function loadTestCases(filename: string): any {
   const filePath = path.resolve(filename);
@@ -59,7 +59,8 @@ async function main({
         if (verdictsMatch) 
           nbexpectedtests++;
       const verdictString = verdicts.join(",");
- 
+      // display UIactions
+      //console.log(`UI Actions for Test Case "${test_case.name}":`, UIactions);
       }
     //next lines usefull for the experimentation
     console.log(`Nb of expected verdicts: ${nbexpectedtests}`);
@@ -154,10 +155,13 @@ async function simple_run(
       if (!task[i].startsWith("Assert")) {
        
         try {
-          //
+          // get UI elements here
+          
           //const [action] = await page.observe(task[i]);
+          //UIactions.push([action]);
           //console.log("Fields to fill:", action);
           const r = await page.act({ action: task[i] });
+          //const r = await page.act(action);
           await page.waitForTimeout(5000);
           console.debug('action', task[i],r.success);
           //observe

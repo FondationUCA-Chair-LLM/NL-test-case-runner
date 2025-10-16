@@ -1,0 +1,116 @@
+[
+  {
+    "name": "Access Formations Page",
+    "actions": [
+      "Open the website 'http://localhost/www.iutca/iut.uca.fr/index.html'",
+      "Click on 'Formations'",
+      "Click on 'Toutes les formations par site'",
+      "Click on 'Site de Clermont-Ferrand'",
+      "Assert that 'BUT Informatique' is displayed in the page",
+      "Assert that 'BUT Mesures Physiques' is displayed in the page"
+    ]
+  },
+  {
+    "name": "Navigate to Scolarité Page",
+    "actions": [
+      "Open the website 'http://localhost/www.iutca/iut.uca.fr/index.html'",
+      "Click on 'Scolarité'",
+      "Click on 'Inscriptions'",
+      "Click on 'Droits d’inscription'",
+      "Assert that 'CVEC' is displayed in the page",
+      "Assert that the link 'https://inscription.uca.fr/' is displayed in the page"
+    ]
+  },
+  {
+    "name": "Access International Section",
+    "actions": [
+      "Open the website 'http://localhost/www.iutca/iut.uca.fr/index.html'",
+      "Click on 'International'",
+      "Click on 'Partir à l'étranger'",
+      "Assert that the page contains 'mobilité'",
+      "Assert that the page contains 'Erasmus'"
+    ]
+  },
+  {
+    "name": "View Actualités",
+    "actions": [
+      "Open the website 'http://localhost/www.iutca/iut.uca.fr/index.html'",
+      "Click on 'Voir toute l'actualité'",
+      "Click on 'Actualités de l'IUT'",
+      "Click on 'La Traverse : une nouvelle ère pour le campus de Montluçon !'",
+      "Assert that 'La Traverse' is displayed in the page",
+      "Assert that 'campus de Montluçon' is displayed in the page"
+    ]
+  },
+  {
+    "name": "Access Contact Page",
+    "actions": [
+      "Open the website 'http://localhost/www.iutca/iut.uca.fr/index.html'",
+      "Click on 'International'",
+      "Click on 'Nous contacter'",
+      "Assert that 'Service des Relations Internationales de l'IUT Clermont Auvergne' is displayed in the page"
+    ]
+  },
+  {
+    "name": "Check Site de Montluçon Formations",
+    "actions": [
+      "Open the website 'http://localhost/www.iutca/iut.uca.fr/index.html'",
+      "Click on 'Formations'",
+      "Click on 'Toutes les formations par site'",
+      "Click on 'Site de Montluçon'",
+      "Assert that the page 'BUT Génie mécanique et productique' is displayed in the page",
+      "Assert that the page 'BUT Techniques de commercialisation' is displayed in the page"
+    ]
+  },
+  {
+    "name": "Access Mon diplôme Page",
+    "actions": [
+      "Open the website 'http://localhost/www.iutca/iut.uca.fr/index.html'",
+      "Click on 'Scolarité'",
+      "Click on 'Mon diplôme'",
+      "Click on 'Vous avez perdu votre diplôme'",
+      "Assert that the link 'Formulaire de déclaration de perte à télécharger ici.' is present in the page"
+      ]
+  },
+  {
+    "name": "Navigate to Relations entreprises",
+    "actions": [
+      "Open the website 'http://localhost/www.iutca/iut.uca.fr/index.html'",
+      "Click on 'Relations entreprises'",
+      "Click on 'Recruter un diplômé, un alternant ou un stagiaire'",
+      "Assert that 'Service Relation entreprises' is present in the page",
+      "Assert that 'Service Formation continue et Alternance' is present in the page"
+    ]
+    
+  },
+  {
+    "name": "Access Université Foraine Section",
+    "actions": [
+      "Open the website 'http://localhost/www.iutca/iut.uca.fr/index.html'",
+      "Click on 'Université Foraine'",
+      "Click on 'Présentation de l'Université Foraine'",
+      "Assert that 'Université Foraine' is present in the page",
+      "Assert that the link 'HAL.science : Université Foraine' is present in the page"
+    ]
+  },
+  {
+    "name": "Check Accessibilité Page",
+    "actions": [
+      "Open the website 'http://localhost/www.iutca/iut.uca.fr/index.html'",
+      "Scroll to the bottom of the page",
+      "Click on 'Accessibilité'",
+      "Assert that 'Handicap' is present in the page",
+      "Assert that 'Mentions légales' is present in the page"
+    ]
+  },
+   {
+    "name": "Recherche",
+    "actions": [
+      "Open the website 'http://localhost/www.iutca/iut.uca.fr/index.html'",
+      "Click on 'Université Foraine'",
+      "Click on 'La recherche, projet régional et européen'",
+      "Assert that 'VIVES University of Applied Sciences' is present in the page",
+      "Assert that a link contains the term 'IUT'"
+      ]
+  }
+]

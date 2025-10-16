@@ -1,0 +1,95 @@
+[
+  
+  {
+    "name": "Header navigation links present",
+    "actions": [
+     "Open the website 'http://localhost/www.cgi/www.cgi.com/france/fr-fr.html'",
+     "Assert that 'Métiers et Solutions' is present in the content of the page",
+      "Assert that 'CGI recrute' is present in the content of the page",
+      "Assert that 'Tendances' is present in the content of the page",
+      "Assert that 'France' is present in the content of the page",
+      "Assert that 'Tendances' is present in the content of the page",
+      "Assert that 'Contactez-nous' is present in the content of the page"
+      
+    ]
+  },
+  {
+    "name": "About Us page content",
+    "actions": [
+      "Open the website 'http://localhost/www.cgi/www.cgi.com/france/fr-fr.html' ",
+      "Click the 'À propos de CGI' ",
+      "Assert that the 'Qui sommes-nous'  is displayed in the page '",
+     
+      "Assert that the page has a link with the term   'Nos distinctions'"
+    ]
+  },
+  {
+    "name": "Careers page content",
+    "actions": [
+     "Open the website 'http://localhost/www.cgi/www.cgi.com/france/fr-fr.html' ",
+      "Click the 'CGI recrute'",
+      "Assert that the page has a link with the term   'En savoir plus sur notre axe Talents'",
+      "Assert that 'Devoir de vigilance' is displayed on this page  "
+   
+    ]
+  },
+{
+    "name": "search for a job",
+    "actions": [
+     "Open the website 'http://localhost/www.cgi/www.cgi.com/france/fr-fr.html' ",
+      "Click the 'Nos offres'",
+      "Type in 'Développement' in the field 'Mots-clés'",
+      "Type in 'lyon' in the field 'Ville'",
+      "Assert that the page has links '",
+      "Assert that 'Développement'OR'ingénierie' is displayed on this page  "
+   
+    ]
+  },
+  {
+    "name": "Contact page and form",
+    "actions": [
+       "Open the website 'http://localhost/www.cgi/www.cgi.com/france/fr-fr.html' ",
+      "Click the 'Contactez-nous' ",
+      "Assert that the contact page is displayed with 'Parlons ensemble de vos projets'",
+      "Assert that the contact page displays with 'veuillez remplir le formulaire'"
+    ]
+    },
+     {
+    "name": "Industry sector page ",
+    "actions": [
+      "Open the website 'http://localhost/www.cgi/www.cgi.com/france/fr-fr.html' ",
+      "Click the 'Assurance'  ",
+       "Assert that the page has  2 links with the term 'Assurance'",
+       "Assert that the contact page displays with 'Tendances du secteur Assurance'"
+    ]
+  },
+   {
+    "name": "Solutions listing page",
+    "actions": [
+      "Open the website 'http://localhost/www.cgi/www.cgi.com/france/fr-fr.html' ",
+      "Click the 'Toutes nos solutions' ",
+      "Assert that the page has links",
+      "Assert that the page has  links with the term 'CGI Credit Studio'",
+      "Assert that the contact page displays with 'Parlons ensemble de vos projets'"
+    ]
+  },
+  {
+    "name": "Trends page content",
+    "actions": [
+      "Open the website 'http://localhost/www.cgi/www.cgi.com/france/fr-fr.html'",
+      "Click the 'Tendances'",
+      "Assert that the page includes 'Observatoires des tendances' ",
+      "Assert that the page has  links with the term 'Rapport 2023'"
+    ]
+  },
+  {
+    "name": "Blog page content",
+    "actions": [
+      "Open the website 'http://localhost/www.cgi/www.cgi.com/france/fr-fr.html' ",
+      "Click the 'Blog' ",
+      "Click on 'IA générative'",
+      "Assert that 'Equipe Communication' is present in the content of the page",
+      "Assert that the page has  links with the term 'CGI'"
+    ]
+  }
+   ]

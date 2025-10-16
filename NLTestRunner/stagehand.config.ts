@@ -7,10 +7,10 @@ import { OpenAI } from "openai";
 dotenv.config();
 
 //test suite
-export const test_suite = "test-open_cart.json"; // "test_cases.json"; // "test_casesV2.json"; // "test_casesV3.json"; // "test_casesV4.json"; // "test_casesV5.json";
+export const test_suite = "tests.json"; // "test_cases.json"; // "test_casesV2.json"; // "test_casesV3.json"; // "test_casesV4.json"; // "test_casesV5.json";
 
 // number of runs for each test case
-export var NUM_RUNS = 5; 
+export var NUM_RUNS = 1; 
 
 //models
 export const model_eval= "qwen3:14b"; //"llama3.3:70b"; //"mistral-nemo:latest" ; //"qwen3:14b"; //"qwen3:14b"; //"qwen3:14b"; //"llama3.3:70b"; //"qwen2.5:7b";
@@ -39,7 +39,7 @@ console.debug = () => {};
 export const StagehandConfig: ConstructorParams = {
   verbose: 0 /* Verbosity level for logging: 0 = silent, 1 = info, 2 = all */,
   domSettleTimeoutMs: 30_000 /* Timeout for DOM to settle in milliseconds */,
-
+  experimental: true,
   // LLM configuration for stagehand
   llmClient: new CustomOpenAIClient({
     modelName: model_nav,

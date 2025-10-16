@@ -19,7 +19,7 @@ import { prompt_assert, prompt_eval, prompt_extract, prompt_extract2 } from "./p
 import { extract, splitWithOverlap } from "./Extractor.js";
 
 
-var NUM_RUNS_TEMP = NUM_RUNS; 
+var NUM_RUNS_TEMP = NUM_RUNS;
 
 /* function evaluation */
 function loadTestCases(filename: string): any {
@@ -58,26 +58,26 @@ async function main({
       }
       if (Array.isArray(test_case.expected)) verdictsMatch = verdicts.every((v, idx) => v === test_case.expected[idx]);
       else verdictsMatch = verdicts.every((v, idx) => v === 1);
-        console.log(`✅ Verdicts match expected: ${verdictsMatch}`);
-        if (verdictsMatch) 
-          nbexpectedtests++;
+      console.log(`✅ Verdicts match expected: ${verdictsMatch}`);
+      if (verdictsMatch)
+        nbexpectedtests++;
       const verdictString = verdicts.join(",");
       consistency_ch.push(verdictString);
-      }
+    }
     //next lines usefull for the experimentation
     console.log(`Nb of expected verdicts: ${nbexpectedtests}`);
     console.log(`Ratio of 'expected verdicts': ${nbexpectedtests / NUM_RUNS_TEMP}`);
-    
+
     //Verdicts summary on all runs
     if (verdicts_allruns.length > 1) {
-    //compute number of verdcits 0, 1, -1
-    const passCount = verdicts_allruns.filter(v => v === 1).length;
-    const failCount = verdicts_allruns.filter(v => v === 0).length;
-    const inconclusiveCount = verdicts_allruns.filter(v => v === -1).length;
-    console.log(`Pass verdicts: ${passCount}`);
-    console.log(`Fail verdicts: ${failCount}`);
-    console.log(`Inconclusive verdicts: ${inconclusiveCount}`);
-  }
+      //compute number of verdcits 0, 1, -1
+      const passCount = verdicts_allruns.filter(v => v === 1).length;
+      const failCount = verdicts_allruns.filter(v => v === 0).length;
+      const inconclusiveCount = verdicts_allruns.filter(v => v === -1).length;
+      console.log(`Pass verdicts: ${passCount}`);
+      console.log(`Fail verdicts: ${failCount}`);
+      console.log(`Inconclusive verdicts: ${inconclusiveCount}`);
+    }
 
     //real consistency use only for experiementations ; returns inf if all_verdicts empty
     const counts_ch = consistency_ch.reduce((acc, val) => {
@@ -89,7 +89,7 @@ async function main({
     console.log(`Most frequent verdict pattern: ${mostFrequent_ch} (Real consistency: ${maxCount_ch / NUM_RUNS_TEMP})`);
 
 
-     }
+  }
 }
 
 async function run_search(
@@ -123,7 +123,7 @@ async function run_search(
   );
 
   await stagehand.close();
-return all_verdicts;
+  return all_verdicts;
 }
 
 async function simple_run(
@@ -169,7 +169,7 @@ async function simple_run(
       if (!task[i].startsWith("Assert")) {
         //evaluate
         readiness = EvaluateAction.evaluateWithoutLLM(task[i], data);
-        if (readiness == true) tc_se = 1.0;
+        if (readiness == true || task[i].startsWith("Optional")) tc_se = 1.0;
         else {
           try {
             readiness = await evaluateWithLLM(page, task[i], data);
@@ -178,8 +178,8 @@ async function simple_run(
               console.log("Fail, evaluate-next KO ", task[i]);
               verdict = -1;
               all_verdicts.push(verdict);
-              i= i==1 ? 2 : i;
-              console.log("Test case consistency estimation: " + tc_consistency / (i-1));
+              i = i == 1 ? 2 : i;
+              console.log("Test case consistency estimation: " + tc_consistency / (i - 1));
               return all_verdicts;
             }
           }
@@ -187,16 +187,16 @@ async function simple_run(
             console.log(`Evaluation failed at step ${i}: ${task[i]} ->`, error);
             verdict = -1; //inconclusive  
             all_verdicts.push(verdict);
-            if (NUM_RUNS_TEMP-NUM_RUNS <= 5) NUM_RUNS_TEMP++;
-            i= i==1 ? 2 : i;
-            console.log("Test case consistency estimation: " + tc_consistency / (i-1));
+            if (NUM_RUNS_TEMP - NUM_RUNS <= 5) NUM_RUNS_TEMP++;
+            i = i == 1 ? 2 : i;
+            console.log("Test case consistency estimation: " + tc_consistency / (i - 1));
             return all_verdicts;
           }
         }
         try {
           const r = await page.act({ action: task[i] });
           await page.waitForTimeout(5000);
-          console.debug('action', task[i],r.success);
+          console.debug('Action', task[i], r.success);
           tc_consistency += tc_se * (1 - 2 * deviation_model_nav); //increment consistency
           //observe
           [data, observed] = await observe(data, r.success, page);
@@ -204,7 +204,7 @@ async function simple_run(
             verdict = -1;
             all_verdicts.push(verdict);
             console.log("Test case consistency estimation: " + tc_consistency / (i));
-            return all_verdicts;  
+            return all_verdicts;
           }
 
         }
@@ -212,10 +212,10 @@ async function simple_run(
           console.log(`Action failed at step ${i}: ${task[i]} ->`, error);
           //nav_results.push(0);
           verdict = -1;
-          if (NUM_RUNS_TEMP-NUM_RUNS <= 5) NUM_RUNS_TEMP++;
+          if (NUM_RUNS_TEMP - NUM_RUNS <= 5) NUM_RUNS_TEMP++;
           all_verdicts.push(verdict);
-          i= i==1 ? 2 : i;
-          console.log("Test case consistency estimation: " + tc_consistency / (i-1));
+          i = i == 1 ? 2 : i;
+          console.log("Test case consistency estimation: " + tc_consistency / (i - 1));
           return all_verdicts;
         }
       } else break;
@@ -239,25 +239,25 @@ async function simple_run(
       try {
         if (typeof result === 'undefined') {
           const terms = extractTermsBetweenQuotes(task[j]);
-                result = await extract(data, page); // undefined, terms);
+          result = await extract(data, page); // undefined, terms);
         }
         verdict2 = await assert(page, result, task[j]);
         console.log("*** Verdict (LLM assert) " + j + ": " + verdict2 + "***");
         all_verdicts.push(verdict2 ? 1 : 0);
         tc_sa = (1 - 2 * deviation_model_assert); //increment consistency
         //console.log(verdict2);
-        if (verdict2 == false) {verdict=0;}
+        if (verdict2 == false) { verdict = 0; }
       } catch (error) {
         console.log(`Assertion failed at step ${j}: ${task[j]} ->`, error);
         //assert_results.push(0);
-        if (NUM_RUNS_TEMP-NUM_RUNS <= 5) NUM_RUNS_TEMP++;
+        if (NUM_RUNS_TEMP - NUM_RUNS <= 5) NUM_RUNS_TEMP++;
         j++;
         verdict = -1; // inconclusive
         all_verdicts.push(verdict);
-        j= j==1 ? 2 : j;
-        console.log("Test case consistency estimation: " + tc_consistency / (j-1));
+        j = j == 1 ? 2 : j;
+        console.log("Test case consistency estimation: " + tc_consistency / (j - 1));
         return all_verdicts;
-      }    
+      }
     }
 
     tc_consistency += tc_sa; //increment consistency
@@ -266,8 +266,8 @@ async function simple_run(
 
   console.log("********** End of Assertions **********");
   console.log("Final verdict: " + verdict);
-  j= j==0 ? i : j;
-  j= j==1 ? 2 : j;
+  j = j == 0 ? i : j;
+  j = j == 1 ? 2 : j;
   console.log("Test case consistency estimation: " + tc_consistency / (j - 1));
   return all_verdicts;
 
@@ -311,39 +311,40 @@ async function run() {
 
 }
 
-async function observe(old: Obs, action_performed: boolean, page: Page, ): Promise<[Obs, boolean]> {
-    var obs = new Obs();
-    var b: boolean = false;
-    await obs.getUIElements(page);
-    //debug
-    console.debug("Observe : found ", obs.links.length, " links");
-    console.debug("Observe : found ", obs.buttons.length, " buttons");
-    console.debug("Observe : found ", obs.forms.length, " forms");
-    console.debug("Observe : found ", obs.fields.length, " fields");
-    console.debug("Observe : found ", obs.checkboxes.length, " checkboxes");
-    console.debug("Observe :  performed ", action_performed);
+async function observe(old: Obs, action_performed: boolean, page: Page,): Promise<[Obs, boolean]> {
+  var obs = new Obs();
+  var b: boolean = false;
+  await obs.getUIElements(page);
+  //debug
+  console.debug("Observe : found ", obs.links.length, " links");
+  console.debug("Observe : found ", obs.buttons.length, " buttons");
+  console.debug("Observe : found ", obs.forms.length, " forms");
+  console.debug("Observe : found ", obs.fields.length, " fields");
+  console.debug("Observe : found ", obs.checkboxes.length, " checkboxes");
+  console.debug("Observe :  performed ", action_performed);
 
-    if (action_performed==true) b=true; //and (old != obs): b=true // TODO PB ICI si on reste sur la même page il faut comparer 2 screenshots ???
-    else b=false;
-    return [obs, b];
+  if (action_performed == true) b = true; //and (old != obs): b=true // TODO PB ICI si on reste sur la même page il faut comparer 2 screenshots ???
+  else b = false;
+  return [obs, b];
 }
 
-async function assert(page: Page, result1: string, inst?: string, ret?:z.AnyZodObject) {
-  
+async function assert(page: Page, result1: string, inst?: string, ret?: z.AnyZodObject) {
+
   //call langchain to evaluate assertion
-  const prompt = PromptTemplate.fromTemplate(prompt_assert);      
-  const llm = new Ollama({model: model_assert,
-  temperature: 0,
-  maxRetries: 5,
-  baseUrl: server, // Base URL for the Ollama API PB ICI 404 ?
-  //verbose: true, // for debug
-  // other params...
+  const prompt = PromptTemplate.fromTemplate(prompt_assert);
+  const llm = new Ollama({
+    model: model_assert,
+    temperature: 0,
+    maxRetries: 5,
+    baseUrl: server, // Base URL for the Ollama API PB ICI 404 ?
+    //verbose: true, // for debug
+    // other params...
   });
- 
-const chunks = splitWithOverlap(result1, 4000, 50);
-const result: any[] = [];
-const chain = prompt.pipe(llm);
-for (const chunk of chunks) {
+
+  const chunks = splitWithOverlap(result1, 4000, 50);
+  const result: any[] = [];
+  const chain = prompt.pipe(llm);
+  for (const chunk of chunks) {
     var verdict = await chain.invoke({
       page: chunk,
       input: inst,
@@ -356,7 +357,7 @@ for (const chunk of chunks) {
     var verdict22 = match ? match[1] : verdict;
     match = verdict22.match(/verdict:(.*)/);
     verdict22 = match ? match[1] : verdict22;
-    let result_assert = (verdict22.includes("false")? false : true);
+    let result_assert = (verdict22.includes("false") ? false : true);
     result.push(result_assert);
     //console.log(result);
   }
@@ -366,31 +367,36 @@ for (const chunk of chunks) {
 
 // Appelle deux agents pour évaluer si l'action suivante peut être effectuée
 async function evaluateWithLLM(page: Page, term: string, data: Obs): Promise<boolean> {
-        console.debug("Evaluate with LLM", term, "\n");
-        let content = await extract(data, page);
-        
-        
-   const prompt = PromptTemplate.fromTemplate(prompt_eval);      
-  const llm = new Ollama({model: model_eval,
-  temperature: 0,
-  maxRetries: 5,
-  baseUrl: server, // Base URL for the Ollama API PB ICI 404 ?
-  // other params...
+  console.debug("Evaluate with LLM", term, "\n");
+  let content = await extract(data, page);
+
+  const prompt = PromptTemplate.fromTemplate(prompt_eval);
+  const llm = new Ollama({
+    model: model_eval,
+    temperature: 0,
+    maxRetries: 5,
+    baseUrl: server, // Base URL for the Ollama API PB ICI 404 ?
+    // other params...
   });
-  const chain = prompt.pipe(llm);
-  var response = await chain.invoke({
-  page: content,
-  input: term,
-  });
+
+const chunks = splitWithOverlap(content, 4000, 50);
+const result: any[] = [];
+const chain = prompt.pipe(llm);
+for (const chunk of chunks) {
+    var response = await chain.invoke({
+      page: chunk,
+      input: term,
+    });
   console.debug("\n", "Evaluate with LLM response", response);
   response = response.toLowerCase();
   var match = response.match(/<\/think>\s*(.*)/s);
   var response = match ? match[1] : response;
   match = response.match(/verdict:(.*)/);
   response = match ? match[1] : response;
-
-  return response === "true" || (typeof response === "string" && (response.includes("true")||response.includes("yes")));
-    }
+  result.push(response === "true" || (typeof response === "string" && (response.includes("true") || response.includes("yes"))));
+}
+  return result.reduce((acc, val) => acc || val, false);
+}
 
 
 run();
