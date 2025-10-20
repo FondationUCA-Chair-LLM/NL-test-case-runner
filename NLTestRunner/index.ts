@@ -2,22 +2,18 @@ import { Stagehand, Page, BrowserContext } from "@browserbasehq/stagehand";
 import { model_eval, model_assert, server, StagehandConfig, deviation_model_assert, deviation_model_nav, deviation_model_eval, NUM_RUNS, test_suite } from "./stagehand.config.js";
 import chalk from "chalk";
 import boxen from "boxen";
-import { drawObserveOverlay, clearOverlays, actWithCache } from "./utils.js";
 import { z } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
-
 import { PromptTemplate } from "@langchain/core/prompts";
 import { Ollama } from "@langchain/ollama";
 import { Obs } from "./Observe.js";
 
 import * as fs from "fs";
 import * as path from "path";
-import { exit } from "process";
 import { EvaluateAction } from "./Evaluate_Action.js";
 import { StrictAsserter } from "./StrictAsserter.js";
-import { prompt_assert, prompt_eval, prompt_extract, prompt_extract2 } from "./prompts.js";
+import { prompt_assert, prompt_eval } from "./prompts.js";
 import { extract, splitWithOverlap } from "./Extractor.js";
-
+import { ParserStep } from "./ParserStep.js";
 
 var NUM_RUNS_TEMP = NUM_RUNS;
 
@@ -151,7 +147,7 @@ async function simple_run(
       try {
         await page.goto(site[1]);
         await page.waitForTimeout(5000);
-        [data, observed] = await observe(data, true, page);
+        //[data, observed] = await observe(data, true, page);
 
       } catch (error) {
         console.log(`Navigation failed for ${site[1]}:`, error);
@@ -165,8 +161,22 @@ async function simple_run(
         verdict = -1; // inconclusive
         return [verdict];
       }
-    } else {
+    } else if (task[i].startsWith("//")) {
+      console.log("Commented step, skipping:", task[i]);
+    }
+    else {
       if (!task[i].startsWith("Assert")) {
+        //check step
+        let parserstep = new ParserStep();
+        task = await parserstep.CheckStep(task, i);
+        if (task.length == 0) {
+          console.log(`Still unrecognized action format at step ${i} after LLM conversion: ${task[i]}`);
+          verdict = -1;
+          all_verdicts.push(verdict);
+          i = i == 1 ? 2 : i;
+          console.log("Test case consistency estimation: " + tc_consistency / (i - 1));
+          return all_verdicts;
+        }
         //evaluate
         readiness = EvaluateAction.evaluateWithoutLLM(task[i], data);
         if (readiness == true || task[i].startsWith("Optional")) tc_se = 1.0;
@@ -379,22 +389,22 @@ async function evaluateWithLLM(page: Page, term: string, data: Obs): Promise<boo
     // other params...
   });
 
-const chunks = splitWithOverlap(content, 4000, 50);
-const result: any[] = [];
-const chain = prompt.pipe(llm);
-for (const chunk of chunks) {
+  const chunks = splitWithOverlap(content, 4000, 50);
+  const result: any[] = [];
+  const chain = prompt.pipe(llm);
+  for (const chunk of chunks) {
     var response = await chain.invoke({
       page: chunk,
       input: term,
     });
-  console.debug("\n", "Evaluate with LLM response", response);
-  response = response.toLowerCase();
-  var match = response.match(/<\/think>\s*(.*)/s);
-  var response = match ? match[1] : response;
-  match = response.match(/verdict:(.*)/);
-  response = match ? match[1] : response;
-  result.push(response === "true" || (typeof response === "string" && (response.includes("true") || response.includes("yes"))));
-}
+    console.debug("\n", "Evaluate with LLM response", response);
+    response = response.toLowerCase();
+    var match = response.match(/<\/think>\s*(.*)/s);
+    var response = match ? match[1] : response;
+    match = response.match(/verdict:(.*)/);
+    response = match ? match[1] : response;
+    result.push(response === "true" || (typeof response === "string" && (response.includes("true") || response.includes("yes"))));
+  }
   return result.reduce((acc, val) => acc || val, false);
 }
 

@@ -1,5 +1,7 @@
-import { Page, expect } from '@playwright/test';
+//import { Page, expect } from '@playwright/test';
 import { BrowserContext } from 'playwright';
+import { Page} from "@browserbasehq/stagehand";
+import { parseElements } from './Extractor.js';
 
 export class Obs {
     links: string[] = [];
@@ -56,6 +58,22 @@ export class Obs {
         //page.locator('checkbox:visible').allInnerTexts();
         this.selects = await page.locator('select:visible').allInnerTexts();
         this.statictText = await page.locator('p:visible, li:visible, span:visible').allInnerTexts();
+    
+    //Add ui element extracted from page.extract ?
+    const cpage = await page.extract();
+    const results = parseElements(cpage.page_text);
+    let result = "{\n";
+     for(var k=0; k<results.length; k++) {
+        const desc: string = results[k].description ?? "(no description)";
+        const type: string = results[k].type ?? "";
+        if (type === "link") this.links.push(desc);
+        if (type === "button") this.buttons.push(desc);
+        if (type === "form") this.forms.push(desc);
+        if (type === "field") this.fields.push(desc);
+        if (type === "checkbox") this.checkboxes.push(desc);
+        if (type === "select") this.selects.push(desc);
+        if (type === "staticText") this.statictText.push(desc);
+    }    
     }
 
     static async getUIElementsByText(filter: string, page:Page): Promise<string[]> {

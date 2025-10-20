@@ -65,6 +65,7 @@ export async function extract(data: Obs,page: Page, ret?: z.AnyZodObject, terms?
       type: z.string()      
     }))});
 
+//déjà fait dans Observe donc necessaire ?
 const cpage = await page.extract();
 const results = parseElements(cpage.page_text);
 console.debug("Parsed elements:", results);

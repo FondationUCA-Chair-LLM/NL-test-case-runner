@@ -7,29 +7,46 @@ import { OpenAI } from "openai";
 dotenv.config();
 
 //test suite
-export const test_suite = "test_cases.json"; // "test_casesV2.json"; // "test_casesV3.json"; // "test_casesV4.json"; // "test_casesV5.json";
+export const test_suite = "tests.json"; // "test_cases.json"; // "test_casesV2.json"; // "test_casesV3.json"; // "test_casesV4.json"; // "test_casesV5.json";
 
-export const model_eval="qwen2.5:7b"; //"granite3.3:2b"; //"devstral:24b"; //"mistral:7b"; //"mistral-nemo:12b"; //"qwen2.5:32b-instruct-q4_K_M"; //"deepseek-r1:14b"; //"mistral:7b"; //"qwen2.5:7b"; //"llama3.3:70b"; //"qwen2.5:7b";
-export const model_assert="qwen2.5:7b"; //"granite3.3:2b"; //"devstral:24b";//"mistral:7b"; //"mistral-nemo:12b"; //"qwen2.5:32b-instruct-q4_K_M"; //"deepseek-r1:14b"; //"mistral:7b"; //"qwen2.5:7b"; //"llama3.3:70b"; //"qwen2.5:7b";
-export const model_nav="qwen2.5:7b"; //"granite3.3:2b"; //"devstral:24b"; //"mistral:7b"; //"mistral-nemo:12b"; //"qwen2.5:32b-instruct-q4_K_M"; //"qwen2.5:7b"; //"mistral:7b"; //"qwen2.5:7b"; //"llama3.3:70b"; //"qwen2.5:7b"; //"qwen2.5:32b-instruct-q4_K_M";
-export const server = "http://192.168.128.44:11434";  //"http://192.168.128.44:11434"; //"http://localhost:11434";
+// number of runs for each test case
+export var NUM_RUNS = 1; 
 
-export var NUM_RUNS = 20; 
+//models
+export const model_eval = "qwen3:14b"; //"llama3.3:70b"; //"mistral-nemo:latest" ; //"qwen3:14b"; //"qwen3:14b"; //"qwen3:14b"; //"llama3.3:70b"; //"qwen2.5:7b";
+export const model_assert = "qwen3:14b"; //"llama3.3:70b"; //"mistral-nemo:latest"; //"qwen3:14b"; //"qwen2.5:7b"; //"llama3.3:70b"; //"qwen2.5:7b";
+export const model_nav = "qwen3:14b"; //"llama3.3:70b"; //"mistral-nemo:latest"; //"qwen3:14b"; //"qwen2.5:7b"; //"llama3.3:70b"; //"qwen2.5:7b"; //"qwen2.5:32b-instruct-q4_K_M";
+export const model_convert_step = "qwen3:14b"; //"llama3.3:70b"; //"mistral-nemo:latest"; //"qwen3:14b"; //"qwen2.5:7b"; //"llama3.3:70b"; //"qwen2.5:7b"; //"qwen2.5:32b-instruct-q4_K_M";
+export const server = "http://192.168.128.44:11434"; // "http://localhost:11434"; //"http://192.168.128.44:11434"
 
-//debug
+//deviations of model
+//llama3.3:70b
+//export const deviation_model_eval=0.029807545;
+//export const deviation_model_nav=0.014214106	;
+//export const deviation_model_assert=0.06870104;
+
+//q3.14b
+export const deviation_model_eval=0.065140091;
+export const deviation_model_nav=0.0;
+export const deviation_model_assert=0.043187707;
+
+//mistral nemo
+//export const deviation_model_eval=0.224253337;
+//export const deviation_model_nav=0.249873162;
+//export const deviation_model_assert=0.078445817;
+
+// Disable console.debug to avoid cluttering the output
 console.debug = () => {};
 export const StagehandConfig: ConstructorParams = {
   verbose: 0 /* Verbosity level for logging: 0 = silent, 1 = info, 2 = all */,
   domSettleTimeoutMs: 30_000 /* Timeout for DOM to settle in milliseconds */,
-
-  // LLM configuration
-
+  experimental: true,
+  // LLM configuration for stagehand
   llmClient: new CustomOpenAIClient({
     modelName: model_nav,
     client: new OpenAI({
       baseURL: server+"/v1",
       apiKey: "ollama",
-      //timeout: 60_000, // 1 minutes
     }),
   }),
 
