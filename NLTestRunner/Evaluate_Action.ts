@@ -1,39 +1,42 @@
-import { Page} from '@playwright/test';
+import { expect, Page} from '@playwright/test';
 import { Obs } from './Observe.js';
 
 
 
 export class EvaluateAction {
-    static evaluateWithoutLLM(term: string, data: Obs): boolean {
-        return EvaluateAction.actions(term, data);
+    static async evaluateWithoutLLM(term: string, data: Obs): Promise<boolean> {
+        return await EvaluateAction.actions(term, data);
     }
 
-    static actions(term: string, data: Obs, page?: Page): boolean {
+    static async actions(term: string, data: Obs, page?: Page): Promise<boolean> {
         console.debug(`\nEvaluate without LLM: ${term}`);
         const termLower = term.toLowerCase();
         if (termLower.startsWith("press")) {return true;}
-        const result = termLower.match(/'([^']*)'/);
+        const result = termLower.match(/'([^']*)'/g); //match(/'([^']*)'/);
         if (!result) {
             console.debug("No valid UI element found in the term.");
-            return false;
+            return false; // retourner exception
         }
-        const target = result[1];
-        
-        if (termLower.startsWith("click")) {
+        let target = result[0].slice(1, -1);
+        switch (true) {
+            case termLower.startsWith("click"):
             return EvaluateAction._evaluateClick(target, data);
-        } else if (termLower.startsWith("check")) {
+            case termLower.startsWith("check"):
             return EvaluateAction._evaluateCheck(target, data, page);
-        } else if (termLower.startsWith("uncheck")) {
+            case termLower.startsWith("uncheck"):
             return EvaluateAction._evaluateUncheck(target, data, page);
-        } else if (termLower.startsWith("fill") || termLower.startsWith("type")) {
+            case termLower.startsWith("fill"):
             return EvaluateAction._evaluateFill(target, data, page);
-        } else if (termLower.startsWith("select")) {
+            case termLower.startsWith("type") || termLower.startsWith("enter"): {
+                target= result[1].slice(1, -1);
+            return EvaluateAction._evaluateFill(target, data, page); }
+            case termLower.startsWith("select"):
             return EvaluateAction._evaluateSelect(target, data);
-        } else if (termLower.startsWith("open")) {
+            case termLower.startsWith("open"):
             return EvaluateAction._evaluateOpen(target, data);
-        } else if (termLower.includes("go_back")) {
+            case termLower.includes("go_back"):
             return EvaluateAction._evaluateGoBack(page, data);
-        } else {
+            default:
             console.debug("Term not handled explicitly. Returning False.");
             return false;
         }
@@ -103,20 +106,30 @@ export class EvaluateAction {
         }
     }
 
-    private static _evaluateFill(target: string, data: Obs, page?: Page): boolean {
+    private static async _evaluateFill(target: string, data: Obs, page?: Page): Promise<boolean> {
         const targetLower = target.trim().toLowerCase();
-        const found = EvaluateAction.inC(target, data, data.fields);
-
+        let found = EvaluateAction.inC(target, data, data.fields);
         console.debug("Fill form check (based on text):", found);
 
-        if (!found || !page) return found;
-
+        if (!found ) 
+            {
+                //check in forms
+                data.forms.forEach(element => {
+                    if (element.toLowerCase().includes(targetLower)) {
+                        found = true;
+                        console.debug("Fill form check (based on forms):", found);
+                    }
+                });
+                
+            }
+            if (!found || !page) return found;
+            
         try {
             const locator = page.locator(
                 `input[name="${targetLower}"], textarea[name="${targetLower}"], select[name="${targetLower}"]`
             );
             // Playwright's toBeEditable is async
-            // await expect(locator).toBeEditable();
+             await expect(locator).toBeEditable();
             console.debug(`The input for '${target}' is editable.`);
             return true;
         } catch (e) {

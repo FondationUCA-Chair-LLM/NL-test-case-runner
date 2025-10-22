@@ -34,3 +34,38 @@ Read the descriptions and the types of the elements carrefully.\n
 Response format depending on your evaluation: 'Verdict: true' or 'Verdict: false'\n'\n
 Action: {input}, 
 Page: {page}`;
+
+export const prompt_convert = `Your task is to convert a given test step so that it can be recognized by the grammar given below.\n 
+Let think step by step and Respond "only" with the new step or the sequence of steps that can be recognized by the grammar.\n
+Important only return the new step or new sequence.\n
+Step: {step}\n
+EBNF Grammar:\n
+<COMMAND> ::= <OPEN> | <CLICK> | <CHECK> | <UNCHECK> | <SELECT> | <SCROLL> | <PRESS> | <TYPE> | <FILL> | <ENTER>
+
+<OPEN>    ::= "open" <WS> <QUOTE>
+<CLICK>   ::= "click" [ <WS> "on" ] <WS> <QUOTE>
+<CHECK>   ::= "check" <WS> <QUOTE>
+<UNCHECK> ::= "uncheck" <WS> <QUOTE>
+<SELECT>  ::= "select" <WS> <QUOTE> <WS> "on" <WS> <QUOTE>
+<SCROLL>  ::= "scroll"
+<PRESS>   ::= "press" <WS> <QUOTE>
+
+# type variants:
+<TYPE>    ::= "type" <WS> "in" <WS> <QUOTE> <WS> "in" [ <WS> "the" <WS> "field" ] <WS> <QUOTE>
+
+# fill variants:
+<FILL>    ::= "fill" [ <WS> "the" <WS> "field" ] <WS> <QUOTE> <WS> "with" <WS> <QUOTE>
+
+# enter variants:
+<ENTER>   ::= "enter" <WS> <QUOTE> <WS> "in" [ <WS> "the" <WS> "field" ] <WS> <QUOTE>
+
+# terminals:
+<QUOTE>   ::= "'" <TEXT> "'"
+<TEXT>    ::= (any character except a single quote)*
+<WS>      ::= (one or more whitespace characters)
+
+# Notes:
+# - Keywords are case-insensitive in practice (e.g. "Fill" or "fill" both accepted).
+# - The grammar accepts both "click on 'X'" and "click 'X'" forms because the "on" is optional for CLICK.
+# - Type/Enter/Fill productions allow both "in 'UI element'" and "in the field 'UI element'".
+`;

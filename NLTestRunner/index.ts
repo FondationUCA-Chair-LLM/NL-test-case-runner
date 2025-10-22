@@ -178,22 +178,22 @@ async function simple_run(
           return all_verdicts;
         }
         //evaluate
-        readiness = EvaluateAction.evaluateWithoutLLM(task[i], data);
+        readiness = await EvaluateAction.evaluateWithoutLLM(task[i], data);
         if (readiness == true || task[i].startsWith("Optional")) tc_se = 1.0;
         else {
-          try {
-            readiness = await evaluateWithLLM(page, task[i], data);
-            tc_se = 1 - 2 * deviation_model_eval;
-            if (readiness == false) {
+          //try {
+            //readiness = await evaluateWithLLM(page, task[i], data);
+            //tc_se = 1 - 2 * deviation_model_eval;
+            //if (readiness == false) {
               console.log("Fail, evaluate-next KO ", task[i]);
               verdict = -1;
               all_verdicts.push(verdict);
               i = i == 1 ? 2 : i;
               console.log("Test case consistency estimation: " + tc_consistency / (i - 1));
               return all_verdicts;
-            }
-          }
-          catch (error) {//eval_results.push(0); 
+            //}
+          //}
+          /*catch (error) {//eval_results.push(0); 
             console.log(`Evaluation failed at step ${i}: ${task[i]} ->`, error);
             verdict = -1; //inconclusive  
             all_verdicts.push(verdict);
@@ -201,7 +201,7 @@ async function simple_run(
             i = i == 1 ? 2 : i;
             console.log("Test case consistency estimation: " + tc_consistency / (i - 1));
             return all_verdicts;
-          }
+          }*/
         }
         try {
           const r = await page.act({ action: task[i] });

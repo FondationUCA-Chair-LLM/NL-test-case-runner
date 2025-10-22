@@ -7,7 +7,7 @@ import { OpenAI } from "openai";
 dotenv.config();
 
 //test suite
-export const test_suite = "tests.json"; // "test_cases.json"; // "test_casesV2.json"; // "test_casesV3.json"; // "test_casesV4.json"; // "test_casesV5.json";
+export const test_suite = "tests.json"; // "test_cases.json"; 
 
 // number of runs for each test case
 export var NUM_RUNS = 1; 
