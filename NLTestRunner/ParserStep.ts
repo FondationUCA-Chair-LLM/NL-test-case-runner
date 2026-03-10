@@ -29,6 +29,81 @@ Enter 'value' in 'UI element'
 Enter 'value' in the field 'UI element'
 */
 
+/*EBNF-style grammar
+<COMMAND> ::= <OPEN> | <CLICK> | <CHECK> | <UNCHECK> | <SELECT> | <SCROLL> | <PRESS> | <TYPE> | <FILL> | <ENTER>
+
+<OPEN>    ::= "open" <WS> <QUOTE>
+<CLICK>   ::= "click" [ <WS> "on" ] <WS> <QUOTE>
+<CHECK>   ::= "check" <WS> <QUOTE>
+<UNCHECK> ::= "uncheck" <WS> <QUOTE>
+<SELECT>  ::= "select" <WS> <QUOTE> <WS> "on" <WS> <QUOTE>
+<SCROLL>  ::= "scroll"
+<PRESS>   ::= "press" <WS> <QUOTE>
+
+# type variants:
+<TYPE>    ::= "type" <WS> "in" <WS> <QUOTE> <WS> "in" [ <WS> "the" <WS> "field" ] <WS> <QUOTE>
+
+# fill variants:
+<FILL>    ::= "fill" [ <WS> "the" <WS> "field" ] <WS> <QUOTE> <WS> "with" <WS> <QUOTE>
+
+# enter variants:
+<ENTER>   ::= "enter" <WS> <QUOTE> <WS> "in" [ <WS> "the" <WS> "field" ] <WS> <QUOTE>
+
+# terminals:
+<QUOTE>   ::= "'" <TEXT> "'"
+<TEXT>    ::= (any character except a single quote)*
+<WS>      ::= (one or more whitespace characters)
+
+*/
+
+/*; ABNF grammar for the supplied command forms
+; (string literals are case-insensitive per RFC 5234)
+
+command    = open / click / check / uncheck / select / scroll / press / type-in / fill / enter
+
+; terminals for spacing
+SP         = %x20
+HTAB       = %x09
+WSP        = SP / HTAB
+
+; quoted string: single-quoted content (does not allow unescaped single quote)
+quoted     = "'" quoted-text "'"
+quoted-text = *(%x20-26 / %x28-7E)   ; printable ASCII excluding single-quote (0x27)
+
+; productions
+open       = "open" 1*WSP quoted
+
+click      = "click" [ 1*WSP "on" ] 1*WSP quoted
+
+check      = "check" 1*WSP quoted
+
+uncheck    = "uncheck" 1*WSP quoted
+
+select     = "select" 1*WSP quoted 1*WSP "on" 1*WSP quoted
+
+scroll     = "scroll"
+
+press      = "press" 1*WSP quoted
+
+; "type in" variants:
+; examples accepted:
+;   type in 'value' in the field 'UI element'
+;   type in 'vale' in 'UI element'
+type-in    = "type" 1*WSP "in" 1*WSP quoted 1*WSP "in" [ 1*WSP "the" 1*WSP "field" ] 1*WSP quoted
+
+; "fill" variants:
+; examples:
+;   Fill the field 'UI element' with 'value'
+;   Fill 'UI element' with 'value'
+fill       = "fill" [ 1*WSP "the" 1*WSP "field" ] 1*WSP quoted 1*WSP "with" 1*WSP quoted
+
+; "enter" variants:
+; examples:
+;   Enter 'value' in 'UI element'
+;   Enter 'values' in the field 'UI element'
+enter      = "enter" 1*WSP quoted 1*WSP "in" [ 1*WSP "the" 1*WSP "field" ] 1*WSP quoted
+*/
+
     constructor() {
         // Use anchored, case-insensitive regexes derived from the ABNF grammar.
         // We accept only single-quoted strings like: 'some value' (no escaped single quotes).
@@ -74,9 +149,13 @@ Enter 'value' in the field 'UI element'
         }
         return { matched: false, sentence };
     }
+
+    // Check and possibly convert a step using LLM if unrecognized.
+    // Returns updated task array.
+    // If conversion fails, returns empty array.
     async CheckStep(task: string[], i: number): Promise<string[]> {
         //check step
-        let parseResult = this.parse(task[i]);
+        const parseResult = this.parse(task[i]);
         if (!parseResult.matched) {
             console.log(`Unrecognized action format at step: ${task[i]}`);
             // try to convert with LLM
@@ -96,7 +175,11 @@ Enter 'value' in the field 'UI element'
                 step: task[i],
             })) as string;
             console.debug(`Converted step: ${step2}`);
+            // Nettoyer la réponse pour ne garder que la ou les étapes converties
             step2 = step2.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+            // supprimer 'Converted Step(s):'
+            step2 = step2.replace(/^Converted Step\(s\):/i, '').trim();
+            
             // Si la conversion renvoie plusieurs lignes, insérer chaque ligne dans le tableau task
             const lines = step2.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
             // Remplacer l'élément courant par les lignes converties

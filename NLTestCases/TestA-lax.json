@@ -1,0 +1,205 @@
+[
+    {
+        "name": "*1 ARTEMIS PAPIER A0",
+        "actions": [
+            "Open 'http://localhost/artemis/eu-artemis.eu/news.html'",
+            "Assert that 'Kick-on' is present in the page"
+        ]
+    },
+    {
+        "name": "2 ARTEMIS PAPIER A1",
+        "actions": [
+            "Open 'http://localhost/artemis/eu-artemis.eu/news.html'",
+            "Assert that the page has a link 'All news' in its description"
+        ]
+    },
+    {
+        "name": "3* ARTEMIS PAPIER A",
+        "actions": [
+            "Open 'http://localhost/artemis/eu-artemis.eu/news.html'",
+            "Assert that '2021 on the May 26' is present in the page"
+        ]
+    },
+    {
+        "name": "4* ARTEMIS PAPIER A2",
+        "actions": [
+            "Open 'http://localhost/artemis/eu-artemis.eu/index.html'",
+            "Assert that 'focus & News' is present in the page"
+        ]
+    },
+    {
+        "name": "5* ARTEMIS PAPIER A21",
+        "actions": [
+            "Open 'http://localhost/artemis/eu-artemis.eu/index.html'",
+            "Assert that 'NEWS & FOCUS' is present in the page"
+        ]
+    },
+    {
+        "name": "6 ARTEMIS PAPIER A22",
+        "actions": [
+            "Open 'http://localhost/artemis/eu-artemis.eu/index.html'",
+            "Assert that 'on the May 26, 2021' is displayed in the page"
+        ]
+    },
+    {
+        "name": "*7 UCA",
+        "actions": [
+            "Open 'https://www.uca.fr/en'",
+            "Assert that 'DRIF' is present in the content of the page"
+        ]
+    },
+    {
+        "name": "*8 UCA11",
+        "actions": [
+            "Open 'https://www.uca.fr/en'",
+            "Assert that 'standard fermé de 8h à 16h30' is displayed in the page"
+        ]
+    },
+    {
+        "name": "9 UCA12",
+        "actions": [
+            "Open 'https://www.uca.fr/en'",
+            "Assert that '*University holidays:' is displayed in the page"
+        ]
+    },
+    {
+        "name": "*10 UCA2",
+        "actions": [
+            "Open 'https://www.uca.fr/en/relations-office'",
+            "Assert that 'standard ouvert de 20h à 16h30' is displayed in the page"
+        ]
+    },
+    {
+        "name": "*11 UCA21",
+        "actions": [
+            "Open 'https://www.uca.fr/en/relations-office'",
+            "Assert that 'Offfice' is displayed in the page"
+        ]
+    },
+    {
+        "name": "*12 UCA22",
+        "actions": [
+            "Open 'https://www.uca.fr/en/relations-office'",
+            "Assert that 'Welcome to University Clermont Auvergne' is displayed in the page"
+        ]
+    },
+    {
+        "name": "*13 UCA3",
+        "actions": [
+            "Open 'https://www.uca.fr/en/strategy/hosting-delegations'",
+            "Assert that the page has a link 'hrs1r' in the page"
+        ]
+    },
+    {
+        "name": "14 UCA32",
+        "actions": [
+            "Open 'https://www.uca.fr/en/strategy/hosting-delegations'",
+            "Assert that the title 'International Relations Office' is present in the page"
+        ]
+    },
+    {
+        "name": "*15 UCA33",
+        "actions": [
+            "Open 'https://www.uca.fr/en/strategy/hosting-delegations'",
+            "Assert that 'no later than (16) weeks before your planned arrival date.' is displayed in the page"
+        ]
+    },
+    {
+        "name": "*16 UCA34",
+        "actions": [
+            "Open 'https://www.uca.fr/en/strategy/hosting-delegations'",
+            "Assert that 'UGA' is present in the page"
+        ]
+    },
+    {
+        "name": "17 Display PHP Courses",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/teaching/php/'",
+            "Assert that 'To appear.' is displayed"
+        ]
+    },
+    {
+        "name": "*18 Display PHP Courses2",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/teaching/php/'",
+            "Assert that 'BUT 3A R33.01 DEV' is displayed"
+        ]
+    },
+    {
+        "name": "*19 Display PHP Courses3",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/teaching/php/'",
+            "Assert that the page has a link 'TD1 basis'"
+        ]
+    },
+    {
+        "name": "*20 Display PHP Courses4",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/teaching/php/'",
+            "Assert that 'Education' is present in the page"
+        ]
+    },
+    {
+        "name": "21 Display PHP Courses5",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/teaching/php/'",
+            "Assert that 'Biography' is displayed"
+        ]
+    },
+    {
+        "name": "22 Display Security Projects",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/'",
+            "Assert that 'To appear.' is displayed"
+        ]
+    },
+    {
+        "name": "*23 Display Security Projects2",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/'",
+            "Assert that 'Quality Data' is displayed in the page"
+        ]
+    },
+    {
+        "name": "*24 Display Security Projects3",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/'",
+            "Assert that 'Partners: CJI,' is present in the page"
+        ]
+    },
+    {
+        "name": "*25 Display Security Projects",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/'",
+            "Assert that 'Testing (active, passive) ' is displayed in the page"
+        ]
+    },
+    {
+        "name": "26 Publications",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/publication/'",
+            "Assert that 'Cours' is displayed in the page"
+        ]
+    },
+    {
+        "name": "*27 Publications11",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/publication/'",
+            "Assert that 'Sébastien Bambdad ' is displayed in the page"
+        ]
+    },
+    {
+        "name": "*28 Publications2",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/publication/'",
+            "Assert that 'Estelle ROUX' is displayed"
+        ]
+    },
+    {
+        "name": "*29 Publications22",
+        "actions": [
+            "Open the website 'https://perso.limos.fr/~sesalva/publication/'",
+            "Assert that the page has a link ' On Studying the Effect of Data Quality on Classification Inference.'"
+        ]
+    }
+]

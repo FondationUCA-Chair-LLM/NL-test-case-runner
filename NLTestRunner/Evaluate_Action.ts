@@ -10,6 +10,7 @@ export class EvaluateAction {
 
     static async actions(term: string, data: Obs, page?: Page): Promise<boolean> {
         console.debug(`\nEvaluate without LLM: ${term}`);
+        console.debug("Data:", data);
         const termLower = term.toLowerCase();
         if (termLower.startsWith("press")) {return true;}
         const result = termLower.match(/'([^']*)'/g); //match(/'([^']*)'/);
@@ -56,7 +57,6 @@ export class EvaluateAction {
             ];
         }
         const found = elementsToCheck.some(el => el.toLowerCase().includes(targetLower));
-        console.debug("Element exists:", found);
         return found;
     }
 
@@ -110,7 +110,6 @@ export class EvaluateAction {
         const targetLower = target.trim().toLowerCase();
         let found = EvaluateAction.inC(target, data, data.fields);
         console.debug("Fill form check (based on text):", found);
-
         if (!found ) 
             {
                 //check in forms

@@ -22,6 +22,7 @@ The page content is a list of elements formatted as 'id, description, type'\n
 Respond 'True' if the Assertion is true and 'False' if the Assertion is not true.\n
 Let think step by step and return the final verdict.\n
 Read the descriptions and the types of the elements carrefully.\n
+If a string is given in the assertion, strictly look for this string only\n
 Response format depending on your evaluation: 'Verdict: true' or 'Verdict: false'\n
 Assertion: {input},\n
 Page: {page}`;
@@ -35,13 +36,14 @@ Response format depending on your evaluation: 'Verdict: true' or 'Verdict: false
 Action: {input}, 
 Page: {page}`;
 
-export const prompt_convert = `Your task is to convert a given test step so that it can be recognized by the grammar given below.\n 
+export const prompt_convert = `Your task is to convert test steps so that it can be recognized by the grammar given below.\n
+The given step does not match the grammar.\n
 Let think step by step and Respond "only" with the new step or the sequence of steps that can be recognized by the grammar.\n
-Important only return the new step or new sequence.\n
+Response format: 'Converted Step(s): step1, step2, etc. '\n
+
 Step: {step}\n
 EBNF Grammar:\n
 <COMMAND> ::= <OPEN> | <CLICK> | <CHECK> | <UNCHECK> | <SELECT> | <SCROLL> | <PRESS> | <TYPE> | <FILL> | <ENTER>
-
 <OPEN>    ::= "open" <WS> <QUOTE>
 <CLICK>   ::= "click" [ <WS> "on" ] <WS> <QUOTE>
 <CHECK>   ::= "check" <WS> <QUOTE>
@@ -49,16 +51,12 @@ EBNF Grammar:\n
 <SELECT>  ::= "select" <WS> <QUOTE> <WS> "on" <WS> <QUOTE>
 <SCROLL>  ::= "scroll"
 <PRESS>   ::= "press" <WS> <QUOTE>
-
 # type variants:
 <TYPE>    ::= "type" <WS> "in" <WS> <QUOTE> <WS> "in" [ <WS> "the" <WS> "field" ] <WS> <QUOTE>
-
 # fill variants:
 <FILL>    ::= "fill" [ <WS> "the" <WS> "field" ] <WS> <QUOTE> <WS> "with" <WS> <QUOTE>
-
 # enter variants:
 <ENTER>   ::= "enter" <WS> <QUOTE> <WS> "in" [ <WS> "the" <WS> "field" ] <WS> <QUOTE>
-
 # terminals:
 <QUOTE>   ::= "'" <TEXT> "'"
 <TEXT>    ::= (any character except a single quote)*

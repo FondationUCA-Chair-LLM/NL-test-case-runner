@@ -61,7 +61,8 @@ export class Obs {
 
         //Add ui element extracted from page.extract ?
         const cpage = await page.extract();
-        //console.log("Page text extracted: ", cpage.page_text);
+        console.debug("Page text extracted: ", cpage.page_text);
+        if (!cpage.page_text || cpage.page_text === "") throw new Error("No page text extracted");
         const results = parseElements(cpage.page_text);
         let result = "{\n";
         for (var k = 0; k < results.length; k++) {

@@ -10,10 +10,10 @@ dotenv.config();
 export const test_suite = "tests.json"; // "test_cases.json"; 
 
 // number of runs for each test case
-export var NUM_RUNS = 1; 
+export var NUM_RUNS = 20;
 
 //models
-export const model_eval = "qwen3:14b"; //"llama3.3:70b"; //"mistral-nemo:latest" ; //"qwen3:14b"; //"qwen3:14b"; //"qwen3:14b"; //"llama3.3:70b"; //"qwen2.5:7b";
+export const model_eval = "qwen3:14b"; //"llama3.3:70b"; //"mistral-nemo:latest" ; //"qwen3:14b"; //"qwen3:14b"; //"qwen3:14b"; //"llama3.3:70b"; //"qwen2.5:7b";  //gpt-oss:20b-t0-128k
 export const model_assert = "qwen3:14b"; //"llama3.3:70b"; //"mistral-nemo:latest"; //"qwen3:14b"; //"qwen2.5:7b"; //"llama3.3:70b"; //"qwen2.5:7b";
 export const model_nav = "qwen3:14b"; //"llama3.3:70b"; //"mistral-nemo:latest"; //"qwen3:14b"; //"qwen2.5:7b"; //"llama3.3:70b"; //"qwen2.5:7b"; //"qwen2.5:32b-instruct-q4_K_M";
 export const model_convert_step = "qwen3:14b"; //"llama3.3:70b"; //"mistral-nemo:latest"; //"qwen3:14b"; //"qwen2.5:7b"; //"llama3.3:70b"; //"qwen2.5:7b"; //"qwen2.5:32b-instruct-q4_K_M";
@@ -26,17 +26,21 @@ export const server = "http://192.168.128.44:11434"; // "http://localhost:11434"
 //export const deviation_model_assert=0.06870104;
 
 //q3.14b
-export const deviation_model_eval=0.065140091;
-export const deviation_model_nav=0.0;
-export const deviation_model_assert=0.043187707;
+export const deviation_model_eval = 0.065140091;
+export const deviation_model_nav = 0.0;
+export const deviation_model_assert = 0.043187707;
 
 //mistral nemo
 //export const deviation_model_eval=0.224253337;
 //export const deviation_model_nav=0.249873162;
 //export const deviation_model_assert=0.078445817;
 
+//result file
+export const resultfile = './results.xlsx';
+
+
 // Disable console.debug to avoid cluttering the output
-console.debug = () => {};
+console.debug = () => { };
 export const StagehandConfig: ConstructorParams = {
   verbose: 0 /* Verbosity level for logging: 0 = silent, 1 = info, 2 = all */,
   domSettleTimeoutMs: 30_000 /* Timeout for DOM to settle in milliseconds */,
@@ -45,7 +49,7 @@ export const StagehandConfig: ConstructorParams = {
   llmClient: new CustomOpenAIClient({
     modelName: model_nav,
     client: new OpenAI({
-      baseURL: server+"/v1",
+      baseURL: server + "/v1",
       apiKey: "ollama",
     }),
   }),
@@ -71,6 +75,7 @@ export const StagehandConfig: ConstructorParams = {
       width: 1024,
       height: 768,
     },
+    headless: true,
   } /* Configuration options for the local browser */,
 };
 

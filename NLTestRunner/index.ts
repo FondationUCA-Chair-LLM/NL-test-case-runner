@@ -1,5 +1,5 @@
-import { Stagehand, Page, BrowserContext } from "@browserbasehq/stagehand";
-import { model_eval, model_assert, server, StagehandConfig, deviation_model_assert, deviation_model_nav, deviation_model_eval, NUM_RUNS, test_suite } from "./stagehand.config.js";
+import { Stagehand, Page, BrowserContext, LOG_LEVEL_NAMES } from "@browserbasehq/stagehand";
+import { model_eval, model_assert, server, StagehandConfig, deviation_model_assert, deviation_model_nav, deviation_model_eval, NUM_RUNS, test_suite, resultfile } from "./stagehand.config.js";
 import chalk from "chalk";
 import boxen from "boxen";
 import { z } from "zod";
@@ -14,6 +14,8 @@ import { StrictAsserter } from "./StrictAsserter.js";
 import { prompt_assert, prompt_eval } from "./prompts.js";
 import { extract, splitWithOverlap } from "./Extractor.js";
 import { ParserStep } from "./ParserStep.js";
+import Asserter from "./Asserter.js";
+import { writeInFile } from "./rapportsTests.js";
 
 var NUM_RUNS_TEMP = NUM_RUNS;
 
@@ -23,6 +25,8 @@ function loadTestCases(filename: string): any {
   const fileContent = fs.readFileSync(filePath, "utf-8");
   return JSON.parse(fileContent);
 }
+
+// Main function to run test cases
 
 async function main({
   page,
@@ -35,11 +39,14 @@ async function main({
 }) {
 
   const test_cases = loadTestCases(test_suite);
+  let startTime = performance.now();
+
   for (const test_case of test_cases) {
     var nbexpectedtests = 0;
     console.log(`\n📋 Test Case: ${test_case.name} -----------------------------`);
     NUM_RUNS_TEMP = NUM_RUNS;
     let consistency_ch: string[] = [];
+    //verdicts for all runs -1 inconclusive, 1 pass, 0 fail
     let verdicts: number[] = [];
     let verdictsMatch: boolean;
     let verdicts_allruns: number[] = [];
@@ -66,13 +73,17 @@ async function main({
 
     //Verdicts summary on all runs
     if (verdicts_allruns.length > 1) {
-      //compute number of verdcits 0, 1, -1
+      //compute number of verdicts 0, 1, -1
       const passCount = verdicts_allruns.filter(v => v === 1).length;
       const failCount = verdicts_allruns.filter(v => v === 0).length;
       const inconclusiveCount = verdicts_allruns.filter(v => v === -1).length;
       console.log(`Pass verdicts: ${passCount}`);
       console.log(`Fail verdicts: ${failCount}`);
       console.log(`Inconclusive verdicts: ${inconclusiveCount}`);
+      
+      const rowName = ['Nb_fail', 'Nb_INC']
+      const rowVal = [failCount, inconclusiveCount]
+      await writeInFile(resultfile,rowName, rowVal);
     }
 
     //real consistency use only for experiementations ; returns inf if all_verdicts empty
@@ -83,9 +94,9 @@ async function main({
     const maxCount_ch = Math.max(...Object.values(counts_ch));
     const mostFrequent_ch = Object.keys(counts_ch).find(key => counts_ch[key] === maxCount_ch);
     console.log(`Most frequent verdict pattern: ${mostFrequent_ch} (Real consistency: ${maxCount_ch / NUM_RUNS_TEMP})`);
-
-
   }
+  let endTime = performance.now();
+  console.log(`\n⏱️ Total execution time: ${(endTime - startTime) / 1000} seconds`);
 }
 
 async function run_search(
@@ -182,16 +193,16 @@ async function simple_run(
         if (readiness == true || task[i].startsWith("Optional")) tc_se = 1.0;
         else {
           //try {
-            //readiness = await evaluateWithLLM(page, task[i], data);
-            //tc_se = 1 - 2 * deviation_model_eval;
-            //if (readiness == false) {
-              console.log("Fail, evaluate-next KO ", task[i]);
-              verdict = -1;
-              all_verdicts.push(verdict);
-              i = i == 1 ? 2 : i;
-              console.log("Test case consistency estimation: " + tc_consistency / (i - 1));
-              return all_verdicts;
-            //}
+          //readiness = await evaluateWithLLM(page, task[i], data);
+          //tc_se = 1 - 2 * deviation_model_eval;
+          //if (readiness == false) {
+          console.log("Fail, evaluate-next KO ", task[i]);
+          verdict = 0; //-1; could be -1 to reduce fail verdicts with bad agents
+          all_verdicts.push(verdict);
+          i = i == 1 ? 2 : i;
+          console.log("Test case consistency estimation: " + tc_consistency / (i - 1));
+          return all_verdicts;
+          //}
           //}
           /*catch (error) {//eval_results.push(0); 
             console.log(`Evaluation failed at step ${i}: ${task[i]} ->`, error);
@@ -204,19 +215,19 @@ async function simple_run(
           }*/
         }
         try {
-          const r = await page.act({ action: task[i] });
+          const r = await page.act({ action: task[i] }); //, timeoutMs: 30000 , domSettleTimeoutMs: 300000 });
           await page.waitForTimeout(5000);
-          console.debug('Action', task[i], r.success);
+          //console.log('Action', task[i], r.success, r.message);
           tc_consistency += tc_se * (1 - 2 * deviation_model_nav); //increment consistency
           //observe
           [data, observed] = await observe(data, r.success, page);
           if (observed == false) {
             verdict = -1;
             all_verdicts.push(verdict);
+            console.log(`Observation returned false at step ${i}: ${task[i]}`);
             console.log("Test case consistency estimation: " + tc_consistency / (i));
             return all_verdicts;
           }
-
         }
         catch (error) {
           console.log(`Action failed at step ${i}: ${task[i]} ->`, error);
@@ -229,7 +240,6 @@ async function simple_run(
           return all_verdicts;
         }
       } else break;
-
     }
   }
   //assertions
@@ -269,7 +279,6 @@ async function simple_run(
         return all_verdicts;
       }
     }
-
     tc_consistency += tc_sa; //increment consistency
     j++;
   }
@@ -282,6 +291,7 @@ async function simple_run(
   return all_verdicts;
 
 }
+//extract terms between quotes
 function extractTermsBetweenQuotes(str: string): string {
   const matches = str.match(/'([^']*)'/g);
   if (!matches) return "";
@@ -289,6 +299,7 @@ function extractTermsBetweenQuotes(str: string): string {
   return matches.map(s => s.slice(1, -1)).join(", ");
 }
 
+// Run the main function
 async function run() {
   const stagehand = new Stagehand({
     ...StagehandConfig,
@@ -318,9 +329,12 @@ async function run() {
     stagehand,
   });
   await stagehand.close();
-
 }
 
+//observe function
+// Observe changes in the UI after an action is performed
+// Returns updated Obs and a boolean indicating if a change was observed
+// action_performed is given by the navigation agent :act function
 async function observe(old: Obs, action_performed: boolean, page: Page,): Promise<[Obs, boolean]> {
   var obs = new Obs();
   var b: boolean = false;
@@ -338,8 +352,11 @@ async function observe(old: Obs, action_performed: boolean, page: Page,): Promis
   return [obs, b];
 }
 
-async function assert(page: Page, result1: string, inst?: string, ret?: z.AnyZodObject) {
-
+//call langchain to evaluate assertion
+//result1 : page content
+//inst : assertion instruction
+//ret : zod object for parsing response
+async function old_assert(page: Page, result1: string, inst?: string, ret?: z.AnyZodObject) {
   //call langchain to evaluate assertion
   const prompt = PromptTemplate.fromTemplate(prompt_assert);
   const llm = new Ollama({
@@ -350,7 +367,6 @@ async function assert(page: Page, result1: string, inst?: string, ret?: z.AnyZod
     //verbose: true, // for debug
     // other params...
   });
-
   const chunks = splitWithOverlap(result1, 4000, 50);
   const result: any[] = [];
   const chain = prompt.pipe(llm);
@@ -373,6 +389,31 @@ async function assert(page: Page, result1: string, inst?: string, ret?: z.AnyZod
   }
   return result.reduce((acc, val) => acc || val, false);
 
+}
+
+/**
+ * Assert that an instruction is true for a page by calling the `assert_all_chunks` function.
+ * @param page The page.
+ * @param result1 The result getting from the page in a json format.
+ * @param inst The instruction.
+ * @param ret ???
+ * @returns Weither or not the instruction is true for all chunks if this is for a negative assertion,
+ * @returns Weither or not the instruction is true for at least one chunk otherwise.
+ */
+async function assert(page: Page, result1: string, inst?: string, ret?: z.AnyZodObject): Promise<boolean> {
+  //call langchain to evaluate assertion
+  const llm = new Ollama({
+    model: model_assert,
+    temperature: 0,
+    maxRetries: 5,
+    baseUrl: server, // Base URL for the Ollama API PB ICI 404 ?
+    //verbose: true, // for debug
+    // other params...
+  });
+  const chunks = splitWithOverlap(result1, 4000, 50);
+  console.log(`assert : "${inst}" for ${chunks.length} chunks `);
+  const negative_assertion = Asserter.is_negative_assertion(inst);
+  return await Asserter.assert_all_chunks(negative_assertion, chunks, llm, Asserter.assert_chunk, inst)
 }
 
 // Appelle deux agents pour évaluer si l'action suivante peut être effectuée
@@ -407,6 +448,5 @@ async function evaluateWithLLM(page: Page, term: string, data: Obs): Promise<boo
   }
   return result.reduce((acc, val) => acc || val, false);
 }
-
 
 run();

@@ -13,9 +13,9 @@ export const test_suite = "tests.json"; // ;
 export var NUM_RUNS = 20; 
 
 //models
-export const model_eval= "llama3.3:70b"; //"llama3.3:70b"; //"mistral-nemo:latest" ; //"qwen3:14b"; //"qwen3:14b"; //"qwen3:14b"; //"llama3.3:70b"; //"qwen2.5:7b";
-export const model_assert="llama3.3:70b";//"llama3.3:70b"; //"mistral-nemo:latest"; //"qwen3:14b"; //"qwen2.5:7b"; //"llama3.3:70b"; //"qwen2.5:7b";
-export const model_nav="llama3.3:70b"; //"llama3.3:70b"; //"mistral-nemo:latest"; //"qwen3:14b"; //"qwen2.5:7b"; //"llama3.3:70b"; //"qwen2.5:7b"; //"qwen2.5:32b-instruct-q4_K_M";
+export const model_eval= "qwen3:14b"; //"llama3.3:70b"; //"mistral-nemo:latest" ; //"qwen3:14b"; //"qwen3:14b"; //"qwen3:14b"; //"llama3.3:70b"; //"qwen2.5:7b";
+export const model_assert="qwen3:14b";//"llama3.3:70b"; //"mistral-nemo:latest"; //"qwen3:14b"; //"qwen2.5:7b"; //"llama3.3:70b"; //"qwen2.5:7b";
+export const model_nav="qwen3:14b"; //"llama3.3:70b"; //"mistral-nemo:latest"; //"qwen3:14b"; //"qwen2.5:7b"; //"llama3.3:70b"; //"qwen2.5:7b"; //"qwen2.5:32b-instruct-q4_K_M";
 export const server = "http://192.168.128.44:11434"; //"http://192.168.128.44:11434"; // "http://localhost:11434"; //"http://192.168.128.44:11434"
 
 // Disable console.debug to avoid cluttering the output
@@ -23,6 +23,7 @@ console.debug = () => {};
 export const StagehandConfig: ConstructorParams = {
   verbose: 0 /* Verbosity level for logging: 0 = silent, 1 = info, 2 = all */,
   domSettleTimeoutMs: 30_000 /* Timeout for DOM to settle in milliseconds */,
+  
 
   // LLM configuration for stagehand
   llmClient: new CustomOpenAIClient({
@@ -54,6 +55,7 @@ export const StagehandConfig: ConstructorParams = {
       width: 1024,
       height: 768,
     },
+    headless: true,
   } /* Configuration options for the local browser */,
 };
 
